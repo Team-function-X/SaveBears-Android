@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SaveBears</string>
+    <string name="button_challenge_text">Eco Challenge</string>
+    <string name="eco_challenge_description">Take on a variety of challenges to conserve the environment!</string>
+    <string name="eco_challenge_title">Eco Challenge</string>
+    <string name="register_eco_challenge_title">Register Challenge</string>
+    <string name="register_eco_challenge_button_text">Upload</string>
+    <string name="register_eco_challenge_description">Upload a challenge verification image!</string>
 </resources>
