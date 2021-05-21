@@ -1,5 +1,7 @@
-package com.junction.savebears.network
+package com.junction.savebears.remote.extension
 
+import com.junction.savebears.remote.exception.EmptyBodyError
+import com.junction.savebears.remote.exception.FailNetworkError
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow

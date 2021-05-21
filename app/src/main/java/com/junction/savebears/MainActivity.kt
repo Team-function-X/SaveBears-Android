@@ -1,17 +1,46 @@
 package com.junction.savebears
 
 import android.os.Bundle
-import com.junction.savebears.app.App
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.liveData
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.databinding.ActivityMainBinding
+import com.junction.savebears.remote.extension.asCallbackFlow
+import com.junction.savebears.remote.model.GlacierData
+import com.junction.savebears.remote.retrofit.ApiModule
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import timber.log.Timber
 
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val saveBearsApi
+        get() = ApiModule.saveBearsApi()
 
+    lateinit var glacierDataLiveData: LiveData<GlacierData>
+
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
+        glacierDataLiveData = liveData(Dispatchers.IO) {
+            saveBearsApi.getGlacierChange().asCallbackFlow().catch { e ->
+                // 에러 스트림 처리
+                Timber.d(e)
+            }.collect {
+                // 최종적으로 데이터 스트림 받고 LiveData 로 Emit 함
+                this.emit(it)
+            }
+        }
+
+        // Glacier API 호출 Response 를 Observing (변화 시점에 View 변경하면 됨)
+        glacierDataLiveData.observe(this, Observer {
+
+        })
     }
 }
