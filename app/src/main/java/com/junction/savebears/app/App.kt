@@ -1,10 +1,16 @@
 package com.junction.savebears.app
 
 import android.app.Application
+import android.util.Log
 import androidx.room.Room
 import androidx.viewbinding.BuildConfig
+import com.amplifyframework.AmplifyException
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin
 import com.junction.savebears.local.room.LocalDataBase
 import timber.log.Timber
+import java.io.File
 
 class App : Application() {
 
@@ -19,9 +25,31 @@ class App : Application() {
             Timber.plant(Timber.DebugTree())
         }
         super.onCreate()
+
+        try {
+            // Add these lines to add the AWSCognitoAuthPlugin and AWSS3StoragePlugin plugins
+            Amplify.addPlugin(AWSCognitoAuthPlugin())
+            Amplify.addPlugin(AWSS3StoragePlugin())
+            Amplify.configure(applicationContext)
+
+            Log.i("MyAmplifyApp", "Initialized Amplify")
+        } catch (error: AmplifyException) {
+            Log.e("MyAmplifyApp", "Could not initialize Amplify", error)
+        }
+
     }
 
     companion object {
         private const val LOCAL_DB_NAME = "SaveBearsLocalData"
+    }
+
+    private fun uploadFile() {
+        val exampleFile = File(applicationContext.filesDir, "ExampleKey")
+        exampleFile.writeText("Example file contents")
+
+        Amplify.Storage.uploadFile("ExampleKey", exampleFile,
+                { Log.i("MyAmplifyApp", "Successfully uploaded: ${it.key}") },
+                { Log.e("MyAmplifyApp", "Upload failed", it) }
+        )
     }
 }

@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-savebearsandroid-dev-33506-authRole",
+      "UnauthRoleArn": "arn:aws:iam::771785741123:role/amplify-savebearsandroid-dev-33506-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::771785741123:role/amplify-savebearsandroid-dev-33506-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-savebearsandroid-dev-33506-deployment",
+      "UnauthRoleName": "amplify-savebearsandroid-dev-33506-unauthRole",
+      "StackName": "amplify-savebearsandroid-dev-33506",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:771785741123:stack/amplify-savebearsandroid-dev-33506/45c5ed60-ba63-11eb-a9b2-06b00110e008",
+      "AmplifyAppId": "d3bixtv3t9i87q"
+    }
+  }
+}
