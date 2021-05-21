@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
     tools:context=".MainActivity">
 
     <TextView
+        android:layout_marginStart="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -17,15 +17,19 @@
         android:textStyle="bold" />
 
     <TextView
+        android:layout_marginTop="4dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/eco_challenge_description"
         android:textSize="16sp" />
 
     <ListView
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="24dp"
+        tools:listitem="@layout/eco_challenge_list_item"
         android:id="@+id/ecoChallengeList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

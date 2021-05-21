@@ -1,6 +1,5 @@
 package com.junction.savebears
 
-import android.net.Uri
 import android.os.Bundle
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.databinding.ActivityChallengeListBinding
