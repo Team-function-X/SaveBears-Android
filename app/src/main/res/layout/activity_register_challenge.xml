@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/eco_challenge_title"
+        android:text="@string/register_eco_challenge_title"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -19,13 +19,23 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/eco_challenge_description"
+        android:text="@string/register_eco_challenge_description"
         android:textSize="16sp" />
 
-    <ListView
-        android:id="@+id/ecoChallengeList"
+
+    <ImageView
+        android:id="@+id/selectImageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp" />
+        android:layout_height="300dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:text="@string/register_eco_challenge_button_text" />
 
 </LinearLayout>

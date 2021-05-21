@@ -1,5 +1,6 @@
 package com.junction.savebears
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -28,6 +29,29 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
+        /**
+         * 빙하 변화량 API 호출 (데이터 리프레쉬)
+         */
+        refreshGlacierData()
+
+        /**
+         * Glacier API 호출 Response 를 Observing (변화 시점에 View 변경하면 됨)
+         */
+        glacierDataLiveData.observe(this, Observer {
+            // ImageView 적용 등
+        })
+
+        /**
+         * 에코 챌린지 페이지로 이동할 수 있는 버튼
+         */
+        binding.ecoChallengeButton.setOnClickListener {
+            startActivity(Intent(this, ChallengeListActivity::class.java))
+        }
+
+    }
+
+    @ExperimentalCoroutinesApi
+    private fun refreshGlacierData() {
         glacierDataLiveData = liveData(Dispatchers.IO) {
             saveBearsApi.getGlacierChange().asCallbackFlow().catch { e ->
                 // 에러 스트림 처리
@@ -37,10 +61,5 @@ class MainActivity : BaseActivity() {
                 this.emit(it)
             }
         }
-
-        // Glacier API 호출 Response 를 Observing (변화 시점에 View 변경하면 됨)
-        glacierDataLiveData.observe(this, Observer {
-
-        })
     }
 }
