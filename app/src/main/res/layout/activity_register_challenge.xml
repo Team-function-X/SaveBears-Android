@@ -33,6 +33,7 @@
         android:src="@drawable/placeholder" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/uploadImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
