@@ -44,13 +44,8 @@ class GlacierGraphActivity : AppCompatActivity() {
             mpChart.isHighlightFullBarEnabled = false
 
             // draw bars behind lines
-
-            // draw bars behind lines
             mpChart.drawOrder = arrayOf(
-                CombinedChart.DrawOrder.BAR,
-                CombinedChart.DrawOrder.CANDLE,
                 CombinedChart.DrawOrder.LINE
-
             )
 
             val l: Legend = mpChart.legend
@@ -76,7 +71,7 @@ class GlacierGraphActivity : AppCompatActivity() {
             val data = CombinedData()
 
             data.setData(generateLineData())
-            data.setData(generateBarData())
+//            data.setData(generateBarData())
 //            data.setData(generateBubbleData())
 //            data.setData(generateScatterData())
 //            data.setData(generateCandleData())
@@ -88,21 +83,23 @@ class GlacierGraphActivity : AppCompatActivity() {
         }
     }
 
-    private fun generateLineData(): LineData? {
-        val count = 12
+    private fun generateLineData(): LineData {
+        val list = (0..9).toList()
         val d = LineData()
         val entries = ArrayList<Entry>()
-        for (index in 0 until count) entries.add(Entry(index + 0.5f, getRandom(15f, 5f)))
+        for (index in 0 until list.count()) {
+            entries.add(Entry(index + 0.5f, getRandom(15f, 5f)))
+        }
         val set = LineDataSet(entries, "Line DataSet")
         set.color = Color.RED
         set.lineWidth = 2.5f
-        set.setCircleColor(Color.rgb(240, 238, 70))
+        set.setCircleColor(Color.BLUE)
         set.circleRadius = 5f
         set.fillColor = Color.RED
         set.mode = LineDataSet.Mode.CUBIC_BEZIER
         set.setDrawValues(true)
-        set.valueTextSize = 10f
-        set.valueTextColor = Color.rgb(240, 238, 70)
+        set.valueTextSize = 20f
+        set.valueTextColor = Color.BLACK
         set.axisDependency = YAxis.AxisDependency.LEFT
         d.addDataSet(set)
         return d
@@ -115,7 +112,6 @@ class GlacierGraphActivity : AppCompatActivity() {
 
         for (index in 0 until count) {
             entries1.add(BarEntry(0f, getRandom(25f, 25f)))
-
             // stacked
             entries2.add(BarEntry(0f, floatArrayOf(getRandom(13f, 12f), getRandom(13f, 12f))))
         }
