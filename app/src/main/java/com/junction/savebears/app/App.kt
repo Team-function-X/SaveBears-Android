@@ -1,6 +1,7 @@
 package com.junction.savebears.app
 
 import android.app.Application
+import android.util.Log
 import androidx.room.Room
 import androidx.viewbinding.BuildConfig
 import com.amplifyframework.AmplifyException
@@ -31,10 +32,11 @@ class App : Application() {
             Amplify.addPlugin(AWSS3StoragePlugin())
             Amplify.configure(applicationContext)
 
-            Timber.i("Initialized Amplify")
+            Log.i("App","Initialized Amplify")
         } catch (error: AmplifyException) {
-            Timber.i("Could not initialize Amplify: $error")
+            Log.e("App","Could not initialize Amplify: error")
         }
+        //uploadFile()
 
     }
 
