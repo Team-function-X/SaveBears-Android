@@ -8,23 +8,16 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.amplifyframework.core.Amplify
 import com.google.android.material.snackbar.Snackbar
 import com.junction.savebears.BuildConfig
 import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
-import com.junction.savebears.component.Status
-import com.junction.savebears.component.UiState
 import com.junction.savebears.component.ext.bitmapToFile
-import com.junction.savebears.component.ext.drawableToByteArray
 import com.junction.savebears.component.ext.loadUri
-import com.junction.savebears.component.ext.toSimpleString
 import com.junction.savebears.databinding.ActivityRegisterChallengeBinding
 import com.junction.savebears.local.room.Challenge
-import com.junction.savebears.remote.model.ChallengeResponse
-import com.junction.savebears.remote.model.GlacierResponse
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +26,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import org.w3c.dom.Comment
 import timber.log.Timber
 import java.io.File
 import java.util.*
@@ -90,15 +82,7 @@ class RegisterChallengeActivity : BaseActivity() {
      * - 서버에 챌린지 수행 인증 이미지를 전송
      */
     private fun uploadChallengeImage(image: Uri) {
-        var comment: String = binding.challengeCommentEditText.text.toString()
-
-        // TODO 저장소에서 uri로 get 하기
-        //  1. contentProvider에 cursor로 접근해 사진 정보를 가져오기
-        //  2. 사진 백엔드에서 요구하는 형식에 맞게 변환 후 Request
-        //   - 성공 -> 해당 점수 반영(기획 필요)
-        //   - 실패 -> 다시 시도 로직(기획 필요)
-        //   - 통신 중 -> 기획 필요
-
+        val comment: String = binding.challengeCommentEditText.text.toString()
         Timber.d(image.path)
         Timber.d(image.lastPathSegment)
         uploadFileToS3(image, comment)
@@ -138,10 +122,14 @@ class RegisterChallengeActivity : BaseActivity() {
         )
     }
 
+    /**
+     * Amazon S3 스토리지에 업로드가 완료되고, Challenge API 호출 결과를 반환받았을 때
+     * 반환 결과 (점수) 에 따른 다이얼로그를 띄워주는 동작
+     */
     private fun resultDialog(point: Int, image: Uri, comment: String) {
         val builder = AlertDialog.Builder(this)
 
-        if (point >= 1) {
+        if (point >= 1) {  // 챌린지 수행에 성공했을 때
             builder.apply {
                 this.setMessage("Challenge success! Would you like to record your success?")
                 this.setNegativeButton("NO") { _, _ ->
@@ -154,7 +142,7 @@ class RegisterChallengeActivity : BaseActivity() {
                 }
             }
             builder.show()
-        } else {
+        } else {  // 챌린지 수행에 실패했을 때
             builder.apply {
                 this.setMessage("Challenge failed. Please take a picture again or upload another picture.")
                 this.setNegativeButton("NO") { _, _ -> }
