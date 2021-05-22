@@ -10,9 +10,23 @@
         android:id="@+id/mp_chart"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/margin54"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_back"
+        style="@style/Typography.400.Medium"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/length54"
+        android:background="@color/blue"
+        android:text="@string/go_home"
+        android:textColor="@color/white_900"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mp_chart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

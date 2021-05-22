@@ -8,7 +8,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.jakewharton.rxbinding4.view.clicks
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.ext.openActivity
@@ -16,8 +15,9 @@ import com.junction.savebears.component.ext.toastLong
 import com.junction.savebears.databinding.ActivityMainBinding
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.InternalCoroutinesApi
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -27,7 +27,9 @@ import java.util.concurrent.TimeUnit
 @FlowPreview
 class MainActivity : BaseActivity() {
 
+    private var isFirstTurnOn = true
     private lateinit var binding: ActivityMainBinding
+
     enum class Glacier(val value: Int) { Safe(1), Normal(2), Dangerous(3) }
     enum class Result { Success, Fail }
 
@@ -76,6 +78,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showGlacierData(value: Int) {
+        isFirstTurnOn = false
         val drawableId = resources.getIdentifier(
             String.format("ic_polar_%s", value),
             "drawable",
@@ -87,7 +90,7 @@ class MainActivity : BaseActivity() {
             packageName
         )
 
-        toastLong(msgId)
+        if (!isFirstTurnOn) toastLong(msgId)
         binding.ivPolar.setImageResource(drawableId)
         progressHide()
     }

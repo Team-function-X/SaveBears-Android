@@ -20,6 +20,7 @@ class GlacierGraphActivity : AppCompatActivity() {
         binding = ActivityGlacierGraphBinding.inflate(layoutInflater)
         setContentView(binding.root)
         showGraph()
+        binding.btnBack.setOnClickListener { finish() }
     }
 
     private fun showGraph() {
