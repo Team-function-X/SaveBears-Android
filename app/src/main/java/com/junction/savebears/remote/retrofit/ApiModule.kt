@@ -18,7 +18,7 @@ object ApiModule {
 
     fun challengeApi(): ChallengeApi =
         provideRetrofit()
-            .baseUrl(GLACIER_BASE_URL)
+            .baseUrl("http://ec2-15-164-220-118.ap-northeast-2.compute.amazonaws.com/")
             .client(provideOkHttpClient().build())
             .build()
             .create(ChallengeApi::class.java)
