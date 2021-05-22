@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="blue_200">#52B2F1</color>
+    <color name="blue_500">#1E4F8A</color>
+    <color name="blue_700">#0077c2</color>
+    <color name="green_200">#66bb6a</color>
+    <color name="green_700">#338a3e</color>
+    <color name="black">#131F3C</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background">#E2E6ED</color>
     <color name="colorPrimary">#FCF8F4</color>
     <color name="colorPrimaryDark">#FCF8F4</color>
     <color name="colorAccent">#8EC4EE</color>
