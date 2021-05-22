@@ -78,7 +78,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showGlacierData(value: Int) {
-        isFirstTurnOn = false
         val drawableId = resources.getIdentifier(
             String.format("ic_polar_%s", value),
             "drawable",
@@ -93,6 +92,7 @@ class MainActivity : BaseActivity() {
         if (!isFirstTurnOn) toastLong(msgId)
         binding.ivPolar.setImageResource(drawableId)
         progressHide()
+        isFirstTurnOn = false
     }
 
     private fun progressShow() {

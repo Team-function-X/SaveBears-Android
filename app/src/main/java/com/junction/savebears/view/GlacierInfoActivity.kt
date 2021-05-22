@@ -7,7 +7,13 @@ import com.junction.savebears.adapter.GlacierInfoAdapter
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.ext.openActivity
 import com.junction.savebears.databinding.ActivityGlacierInfoBinding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.InternalCoroutinesApi
 
+@ExperimentalCoroutinesApi
+@FlowPreview
+@InternalCoroutinesApi
 class GlacierInfoActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGlacierInfoBinding

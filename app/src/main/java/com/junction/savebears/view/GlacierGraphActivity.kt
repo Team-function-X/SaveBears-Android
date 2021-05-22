@@ -1,5 +1,6 @@
 package com.junction.savebears.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,9 +9,16 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
+import com.junction.savebears.component.ext.openActivity
 import com.junction.savebears.databinding.ActivityGlacierGraphBinding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
 
+@FlowPreview
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 class GlacierGraphActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGlacierGraphBinding
@@ -20,7 +28,11 @@ class GlacierGraphActivity : AppCompatActivity() {
         binding = ActivityGlacierGraphBinding.inflate(layoutInflater)
         setContentView(binding.root)
         showGraph()
-        binding.btnBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener {
+            openActivity(MainActivity::class.java) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
+        }
     }
 
     private fun showGraph() {
@@ -36,10 +48,9 @@ class GlacierGraphActivity : AppCompatActivity() {
             // draw bars behind lines
             mpChart.drawOrder = arrayOf(
                 CombinedChart.DrawOrder.BAR,
-                CombinedChart.DrawOrder.BUBBLE,
                 CombinedChart.DrawOrder.CANDLE,
-                CombinedChart.DrawOrder.LINE,
-                CombinedChart.DrawOrder.SCATTER
+                CombinedChart.DrawOrder.LINE
+
             )
 
             val l: Legend = mpChart.legend
@@ -83,11 +94,11 @@ class GlacierGraphActivity : AppCompatActivity() {
         val entries = ArrayList<Entry>()
         for (index in 0 until count) entries.add(Entry(index + 0.5f, getRandom(15f, 5f)))
         val set = LineDataSet(entries, "Line DataSet")
-        set.color = Color.rgb(240, 238, 70)
+        set.color = Color.RED
         set.lineWidth = 2.5f
         set.setCircleColor(Color.rgb(240, 238, 70))
         set.circleRadius = 5f
-        set.fillColor = Color.rgb(240, 238, 70)
+        set.fillColor = Color.RED
         set.mode = LineDataSet.Mode.CUBIC_BEZIER
         set.setDrawValues(true)
         set.valueTextSize = 10f
