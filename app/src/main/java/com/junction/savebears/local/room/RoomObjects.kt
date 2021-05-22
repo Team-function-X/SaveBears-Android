@@ -12,7 +12,7 @@ import java.util.*
 )
 data class Challenge(
     @PrimaryKey(autoGenerate = true)                                                       var id:                      Int                  = 1  ,
-    @ColumnInfo(name = "mission_complete_date")                                            val missionCompleteDate:     Date                      ,
+    @ColumnInfo(name = "mission_complete_date")                                            val missionCompleteDate:     String                    ,
     @ColumnInfo(name = "image_signature", typeAffinity = ColumnInfo.BLOB)                  val imageSignature:          ByteArray                 ,
     @ColumnInfo(name = "image_str_uri")                                                    val imageStrUri:             String                    ,
     @ColumnInfo(name = "comment")                                                          val comment:                 String                    ,

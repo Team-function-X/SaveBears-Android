@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingHorizontal="24dp"
-    android:paddingVertical="16dp">
+    android:paddingTop="16dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_date"
         style="@style/Typography.600.Medium"
         android:layout_width="wrap_content"
+        android:layout_marginHorizontal="24dp"
         android:layout_height="wrap_content"
         android:text="2021.05.22"
         android:textColor="@color/gray_700"
@@ -21,11 +21,19 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_comment"
         style="@style/Typography.600.Bold"
+        android:layout_marginHorizontal="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recycling Plastic Pet Bottle"
         android:textColor="@color/black"
+        android:layout_marginBottom="16dp"
         android:textSize="18sp"
         tools:ignore="HardcodedText" />
 
+    <View
+        android:background="@color/gray_200"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
 </LinearLayout>
+

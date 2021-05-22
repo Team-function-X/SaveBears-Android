@@ -1,216 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical"
     tools:context=".view.RegisterChallengeActivity">
 
-    <androidx.cardview.widget.CardView
+    <ProgressBar
+        android:id="@+id/challengeRegisterProgress"
+        android:layout_width="40dp"
+        android:visibility="gone"
+        android:layout_height="40dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="24dp"
+        android:elevation="100dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/blue_500" />
+
+
+    <com.xw.repo.widget.BounceScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="24dp"
-        app:cardCornerRadius="8dp">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:background="@color/background"
             android:orientation="vertical">
+
 
             <TextView
                 style="@style/Typography.600.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register_challenge_title" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="32dp"
-                android:src="@drawable/ic_water_bottle" />
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="36dp"
+                android:text="Challenge"
+                android:textSize="24sp" />
 
             <TextView
-                style="@style/Typography.400.Light"
+                style="@style/Typography.600.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginTop="32dp"
-                android:gravity="center_horizontal"
-                android:text="Please separate the plastic bottle\nand upload the proof photo!"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="8dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <LinearLayout
-                android:id="@+id/addImageButton"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="@drawable/dash_border"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_add_circle_outline_24"
-                    app:tint="@color/gray_icon" />
-
-                <TextView
-                    style="@style/Typography.400.Light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Add Image"
-                    android:textColor="@color/gray_icon"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
+                android:layout_marginHorizontal="24dp"
+                android:text="Do today's challenge!"
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/uploadedImageCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
                 app:cardCornerRadius="8dp">
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/editImageButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|end"
-                        android:layout_margin="16dp"
-                        android:elevation="1dp"
-                        android:src="@drawable/ic_edit_image" />
-
-                    <ImageView
-                        android:id="@+id/uploadImageView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@color/background" />
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="24dp">
 
                     <TextView
-                        android:id="@+id/dateText"
+                        style="@style/Typography.600.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start|bottom"
-                        android:layout_margin="16dp"
-                        android:background="@drawable/ic_rectangle_image_date"
-                        android:elevation="1dp"
-                        android:gravity="center"
-                        android:text="21.05.22"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:text="@string/register_challenge_title"
+                        android:textSize="18sp" />
 
-                </FrameLayout>
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="24dp"
+                        android:src="@drawable/ic_water_bottle" />
+
+                    <TextView
+                        style="@style/Typography.400.Light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="24dp"
+                        android:gravity="center_horizontal"
+                        android:text="Please separate the plastic bottle\nand upload the proof photo!"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-            <EditText
-                android:id="@+id/challengeCommentEditText"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin8"
-                android:hint="Please write a comment."
-                android:maxLines="3" />
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/addImageButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="@drawable/dash_border"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin1"
+                            android:src="@drawable/ic_baseline_add_circle_outline_24"
+                            app:tint="@color/gray_icon" />
+
+                        <TextView
+                            style="@style/Typography.400.Light"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="Add Image"
+                            android:textColor="@color/gray_icon"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/uploadedImageCardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:visibility="gone"
+                        app:cardCornerRadius="8dp">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/editImageButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top|end"
+                                android:layout_margin="16dp"
+                                android:elevation="1dp"
+                                android:src="@drawable/ic_edit_image" />
+
+                            <ImageView
+                                android:id="@+id/uploadImageView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@color/background" />
+
+                            <TextView
+                                android:id="@+id/dateText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|bottom"
+                                android:layout_margin="16dp"
+                                android:background="@drawable/ic_rectangle_image_date"
+                                android:elevation="1dp"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                        </FrameLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <EditText
+                        android:id="@+id/challengeCommentEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin8"
+                        android:hint="Please write a comment."
+                        android:maxLines="3" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
+    </com.xw.repo.widget.BounceScrollView>
 
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:id="@+id/uploadImageButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/blue_500"
-        app:cardCornerRadius="8dp">
+        android:layout_gravity="bottom"
+        android:background="@color/blue_500"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
+        <TextView
+            style="@style/Typography.600.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="SUBMIT"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_add_box_24"
-                app:tint="@color/white" />
+    </LinearLayout>
 
-            <TextView
-                style="@style/Typography.600.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="SUBMIT"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-
-    <!--    <androidx.appcompat.widget.AppCompatTextView-->
-    <!--        style="@style/Typography.600.Bold"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="@dimen/margin40"-->
-    <!--        android:text="@string/register_eco_challenge_title"-->
-    <!--        android:textSize="24sp"-->
-    <!--        android:textStyle="bold" />-->
-
-    <!--    <androidx.appcompat.widget.AppCompatTextView-->
-    <!--        style="@style/Typography.400.Light"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/register_eco_challenge_description" />-->
-
-    <!--    <androidx.appcompat.widget.AppCompatImageView-->
-    <!--        android:id="@+id/selectImageView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="300dp"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        android:scaleType="centerCrop"-->
-    <!--        android:src="@drawable/placeholder" />-->
-
-    <!--    <androidx.appcompat.widget.AppCompatButton-->
-    <!--        android:id="@+id/uploadImageButton"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="end"-->
-    <!--        android:layout_marginTop="@dimen/margin8"-->
-    <!--        android:text="@string/register_eco_challenge_button_text" />-->
-
-    <!--    for loading  -->
-    <!--    <include-->
-    <!--        android:id="@+id/loading_progress"-->
-    <!--        layout="@layout/loading_progress"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent" />-->
-
-</LinearLayout>
+</FrameLayout>

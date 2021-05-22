@@ -114,4 +114,9 @@ dependencies {
     // Image Cropper
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
+    // Bounce ScrollView
+    implementation 'me.everything:overscroll-decor-android:1.1.0'
+
+    implementation 'com.github.woxingxiao:BounceScrollView:1.5-androidx'
+
 }

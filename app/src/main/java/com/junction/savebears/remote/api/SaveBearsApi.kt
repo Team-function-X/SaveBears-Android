@@ -8,7 +8,6 @@ import retrofit2.http.GET
 import retrofit2.http.PUT
 
 interface SaveBearsApi {
-
     @GET("/glacier")
     suspend fun getGlacierChange(): GlacierResponse
 
