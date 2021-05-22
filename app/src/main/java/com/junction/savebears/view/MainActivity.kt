@@ -1,23 +1,23 @@
 package com.junction.savebears.view
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import com.jakewharton.rxbinding4.view.clicks
-import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
-import com.junction.savebears.component.Status
-import com.junction.savebears.component.UiState
+import com.junction.savebears.component.ext.openActivity
+import com.junction.savebears.component.ext.toastLong
 import com.junction.savebears.databinding.ActivityMainBinding
-import com.junction.savebears.remote.model.GlacierResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.InternalCoroutinesApi
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -27,113 +27,100 @@ import java.util.concurrent.TimeUnit
 @FlowPreview
 class MainActivity : BaseActivity() {
 
-    private var isFirstTurnOn = false
     private lateinit var binding: ActivityMainBinding
-    private val uiState = MutableLiveData<UiState<GlacierResponse>>()
+
+    enum class Glacier(val value: Int) { Safe(1), Normal(2), Dangerous(3) }
+    enum class Result { Success, Fail }
+
+    private val challengeLauncher: ActivityResultLauncher<Bundle> = // 첼린지 런처
+        registerForActivityResult(ChallengeLauncherContract()) { result: Result ->
+            val data =
+                when (result) {
+                    Result.Success -> Glacier.Safe
+                    Result.Fail -> Glacier.Dangerous
+                }.value
+
+            showGlacierData(data)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        uiState.value = UiState.empty() // 초기 로딩
-        binding.loadingView.progress.isVisible = false
+        progressShow()
         setOnListeners()
+        showGlacierData(Glacier.Normal.value)
     }
 
     private fun setOnListeners() {
-        binding.ecoChallengeButton
+        binding.faboption1 // 빙하 용해
+            .clicks()
+            .doOnNext {
+                Timber.d("2번")
+            }
+            .debounce(DEBOUNCED_TIME, TimeUnit.MILLISECONDS, Schedulers.computation())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .map { GlacierInfoActivity::class.java }
+            .subscribe(::openActivity, Timber::e)
+
+        binding.faboption2 // 첼린지 목록
             .clicks()
             .debounce(DEBOUNCED_TIME, TimeUnit.MILLISECONDS, Schedulers.computation())
             .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe(::moveActivity, Timber::e)
+            .map { ChallengeListActivity::class.java }
+            .subscribe({
+                Timber.d("1번!!")
+                openActivity(it)
+            }, Timber::e)
 
-        binding.challengeArrivedLayout.setOnClickListener {
-            startActivity(Intent(this, RegisterChallengeActivity::class.java))
-        }
+        binding.challengeArrivedLayout // 첼린지
+            .clicks()
+            .debounce(DEBOUNCED_TIME, TimeUnit.MILLISECONDS, Schedulers.computation())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .map { RegisterChallengeActivity::class.java }
+            .subscribe({ challengeLauncher.launch(bundleOf()) }, Timber::e)
     }
 
-    private fun moveActivity(unit: Unit) {
-        startActivity(Intent(this, ChallengeListActivity::class.java))
+    private fun showGlacierData(value: Int) {
+        val drawableId = resources.getIdentifier(
+            String.format("ic_polar_%s", value),
+            "drawable",
+            packageName
+        )
+        val msgId = resources.getIdentifier(
+            String.format("glacier_result_%s", value),
+            "string",
+            packageName
+        )
+
+        toastLong(msgId)
+        binding.ivPolar.setImageResource(drawableId)
+        progressHide()
     }
 
-    override fun onStart() {
-        super.onStart()
-        // TODO 빙하 데이터 fetching
-        //  1. 앱 처음 진입시에는 기존 빙하 데이터 가져오기
-        //  2. 처음이 아닐 시 onStart를 타는 경우 서버에 반영된 결과를 바탕으로 Refresh
-        //  3. API를 나눌지 하나로 통합해서 하나의 값으로 분기할지 정하기 (예를 들면 빈문자열 일때는 기존 값을 보내준다던가)
-        //  4. 각각 에러, 로딩, 반영시 어떻게 UI 반영할지 정하기(기획 필요)
-        //  5. 특히 성공 시에 곰 입모양, 눈물 등 이미지를 어떻게 표현 할지 논의 필요
-
-        if (isFirstTurnOn) {
-            getGlacierData()
-        } else {
-            refreshGlacierData()
-        }
+    private fun progressShow() {
+        binding.loadingView.progress.isVisible = true
     }
 
-    private fun getGlacierData() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val data = flow<GlacierResponse> { saveBearsApi.getGlacierChange() }
-            data
-                .catch {
-                    isFirstTurnOn = false
-                    uiState.postValue(
-                        UiState.error(
-                            it.message ?: getString(R.string.unknown_error)
-                        )
-                    )
-                }
-                .collect {
-                    isFirstTurnOn = true
-                    uiState.postValue(UiState.success(it))
-                }
-        }
+    private fun progressHide() {
+        binding.loadingView.progress.isVisible = false
     }
 
-    private fun refreshGlacierData() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val data = flow<GlacierResponse> { saveBearsApi.getGlacierChange() }
-            data
-                .catch {
-                    uiState.postValue(
-                        UiState.error(
-                            it.message ?: getString(R.string.unknown_error)
-                        )
-                    )
-                }
-                .collect { uiState.postValue(UiState.success(it)) }
-        }
-    }
-
-    private fun showChangesGlacierHeight(response: GlacierResponse?) {
-        response?.let {
-            // TODO 빙하 관련 UI 업데이트 로직
-        }
-    }
-
-    override fun observeUiResult() {
-        uiState.observe(this) {
-            when (it.status) {
-                Status.SUCCESS -> { // 성공했을 때
-                    binding.loadingView.progress.isVisible = false
-                    showChangesGlacierHeight(it.data)
-                }
-                Status.LOADING -> { // 로딩중일 때
-                    binding.loadingView.progress.isVisible = true
-                }
-                Status.ERROR -> { // 실패했을 때
-                    binding.loadingView.progress.isVisible = true
-                    Timber.e(it.message)
-                }
-                Status.EMPTY -> { // 데이터가 비었을 때
-                    binding.loadingView.progress.isVisible = false
-                }
+    inner class ChallengeLauncherContract : ActivityResultContract<Bundle, Result>() {
+        override fun createIntent(context: Context, bundle: Bundle): Intent =
+            Intent(context, RegisterChallengeActivity::class.java).apply {
+                intent.putExtras(bundle)
             }
-        }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Result? =
+            when (resultCode) {
+                Activity.RESULT_OK -> intent?.extras?.get(RESULT_KEY) as Result
+                else -> null
+            }
     }
 
     companion object {
-        private const val DEBOUNCED_TIME = 250L
+        private const val DEBOUNCED_TIME = 200L
+        const val RESULT_KEY = "Result"
     }
 }

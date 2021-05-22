@@ -4,6 +4,7 @@ import androidx.viewbinding.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -16,6 +17,7 @@ object RemoteNetworkModule {
 
     fun provideRetrofit(): Retrofit.Builder =
         Retrofit.Builder()
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create())
 
     fun provideOkHttpClient(): OkHttpClient.Builder =
@@ -34,6 +36,6 @@ object RemoteNetworkModule {
             }
 
     private fun providerHttpLogginInterceptorLogger(): HttpLoggingInterceptor.Logger =
-        HttpLoggingInterceptor.Logger { Timber.d(it) }
+        HttpLoggingInterceptor.Logger { Timber.d("NetworkLog $it") }
 
 }

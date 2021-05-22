@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -33,18 +33,18 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/ecoChallengeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="24dp"
-        android:backgroundTint="@color/blue_500"
-        android:src="@drawable/ic_baseline_add_circle_24"
-        app:fabCustomSize="70dp"
-        app:iconPadding="4dp"
-        app:maxImageSize="40dp"
-        app:tint="@color/white" />
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/ecoChallengeButton"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="end|bottom"-->
+    <!--        android:layout_margin="24dp"-->
+    <!--        android:backgroundTint="@color/blue_500"-->
+    <!--        android:src="@drawable/ic_baseline_add_circle_24"-->
+    <!--        app:fabCustomSize="70dp"-->
+    <!--        app:iconPadding="4dp"-->
+    <!--        app:maxImageSize="40dp"-->
+    <!--        app:tint="@color/white" />-->
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_polar"
@@ -64,15 +64,55 @@
         app:iconTint="@color/white_900"
         tools:ignore="SpUsage" />
 
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:id="@+id/expandable_fab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.nambimobile.widgets.efab.Overlay
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:overlay_orientation="portrait" />
+
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/margin20"
+            android:layout_marginRight="@dimen/margin20"
+            android:layout_marginBottom="@dimen/margin20"
+            app:efab_color="@color/black_300"
+            app:efab_icon="@drawable/ic_baseline_add_circle_24"
+            app:efab_orientation="portrait" />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/faboption_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_color="@color/gray_300"
+            app:fab_icon="@drawable/ic_baseline_add_circle_24"
+            app:fab_orientation="portrait"
+            app:label_text="@string/floating_title_1" />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/faboption_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_color="@color/gray_500"
+            app:fab_icon="@drawable/ic_baseline_add_circle_24"
+            app:fab_orientation="portrait"
+            app:label_text="@string/floating_title_2" />
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
+
     <include
         android:id="@+id/loading_view"
         layout="@layout/layout_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

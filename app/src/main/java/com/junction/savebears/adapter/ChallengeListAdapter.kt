@@ -1,22 +1,14 @@
 package com.junction.savebears.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
-import com.junction.savebears.R
-import com.junction.savebears.component.ext.loadUri
-import com.junction.savebears.component.ext.toBitmap
-import com.junction.savebears.component.ext.toSimpleString
 import com.junction.savebears.databinding.EcoChallengeListItemBinding
 import com.junction.savebears.local.room.Challenge
-import com.junction.savebears.view.ChallengeDetailActivity
 
 class ChallengeListAdapter(
     val itemClick: (Challenge) -> Unit,
-    ) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
 
     private val items = mutableListOf<Challenge>()
 

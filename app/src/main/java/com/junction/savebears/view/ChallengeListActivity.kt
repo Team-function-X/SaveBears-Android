@@ -96,25 +96,4 @@ class ChallengeListActivity : BaseActivity() {
             )
         }
     }
-
-    override fun observeUiResult() {
-        uiState.observe(this) {
-            when (it.status) {
-                Status.SUCCESS -> { // 성공했을 때
-                    binding.loadingView.progress.isVisible = false
-                    adapter.addItem(it.data ?: listOf())
-                }
-                Status.LOADING -> { // 로딩중일 때
-                    binding.loadingView.progress.isVisible = true
-                }
-                Status.ERROR -> { // 실패했을 때
-                    binding.loadingView.progress.isVisible = false
-                    Timber.e(it.message)
-                }
-                Status.EMPTY -> { // 데이터가 비었을 때
-                    binding.loadingView.progress.isVisible = false
-                }
-            }
-        }
-    }
 }

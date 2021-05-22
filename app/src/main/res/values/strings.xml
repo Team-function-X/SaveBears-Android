@@ -11,4 +11,14 @@
     <string name="unknown_error">unknown error occurred</string>
     <string name="register_challenge_title">Today Challenge</string>
     <string name="not_registered_comment">You have not registered a comment.</string>
+
+    <!-- Glacier Comment   -->
+    <string name="please_wait">Now analyze the amount of ice melt and wait a moment.</string>
+    <string name="glacier_result_1">You are doing well. Please consider the environment well.</string>
+    <string name="glacier_result_2">Please try a little more</string>
+    <string name="glacier_result_3">Now analyze the amount of ice melt and wait a moment.</string>
+
+    <!-- Floating Action Button   -->
+    <string name="floating_title_1">Glacier Info</string>
+    <string name="floating_title_2">My Challenge History</string>
 </resources>

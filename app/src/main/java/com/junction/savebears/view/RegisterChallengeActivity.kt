@@ -7,23 +7,30 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.lifecycle.MutableLiveData
 import com.amplifyframework.core.Amplify
 import com.google.android.material.snackbar.Snackbar
 import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
-import com.junction.savebears.component.Status
 import com.junction.savebears.component.UiState
 import com.junction.savebears.component.ext.bitmapToFile
 import com.junction.savebears.component.ext.loadUri
 import com.junction.savebears.databinding.ActivityRegisterChallengeBinding
 import com.junction.savebears.remote.model.GlacierResponse
+import com.junction.savebears.view.MainActivity.Companion.RESULT_KEY
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.InternalCoroutinesApi
 import timber.log.Timber
 import java.io.File
 import java.util.*
 
+@FlowPreview
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 class RegisterChallengeActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterChallengeBinding
@@ -37,6 +44,17 @@ class RegisterChallengeActivity : BaseActivity() {
         binding = ActivityRegisterChallengeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setOnClicks()
+
+        // TODO 미션 성공 시 다음 두가지 나누어서 호출해주세요. 그럼 MainActivity에 성공, 실패의 callback을 전달합니다.
+        //   1. 성공 시 setResult(MainActivity.Result.Success)
+        //   2. 실패 시 setResult(MainActivity.Result.Fail)
+    }
+
+    fun setResult(result: MainActivity.Result) {
+        setResult(Activity.RESULT_OK,
+            Intent()
+                .apply { putExtras(bundleOf(RESULT_KEY to result)) })
+        finish()
     }
 
     private fun setOnClicks() {
@@ -152,21 +170,5 @@ class RegisterChallengeActivity : BaseActivity() {
 
     private fun getChallengeUris() {
 
-    }
-
-    override fun observeUiResult() {
-        uiState.observe(this) {
-            when (it.status) {
-                Status.SUCCESS -> { // 성공했을 때
-                }
-                Status.LOADING -> { // 로딩중일 때
-                }
-                Status.ERROR -> { // 실패했을 때
-                    Timber.e(it.message)
-                }
-                Status.EMPTY -> { // 데이터가 비었을 때
-                }
-            }
-        }
     }
 }

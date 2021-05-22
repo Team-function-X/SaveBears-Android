@@ -11,6 +11,4 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected val saveBearsApi
         get() = ApiModule.saveBearsApi()
-
-    abstract fun observeUiResult()
 }

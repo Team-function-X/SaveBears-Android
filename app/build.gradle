@@ -114,4 +114,11 @@ dependencies {
     // Image Cropper
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
+    // MpChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+    implementation 'com.github.lecho:hellocharts-android:v1.5.8'
+
+    // Floating
+    implementation 'com.nambimobile.widgets:expandable-fab:1.0.2'
 }
