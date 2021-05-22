@@ -37,7 +37,6 @@ class ChallengeListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChallengeListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toastLong(R.string.app_name)
         setRecyclerViewAdapter()
         showAllChallenges()
     }
@@ -69,24 +68,33 @@ class ChallengeListActivity : BaseActivity() {
                             listOf<Challenge>()
                         }
                     } else {
-                        flow { dao.getAllChallenges() } // 리스트가 있으면 해당 리스트 반환
+                        flow {
+                            dao.getAllChallenges()
+                                .collect {
+                                    adapter.addItem(it)
+                                    adapter.notifyDataSetChanged()
+                                }
+                        }// 리스트가 있으면 해당 리스트 반환
                     }
                 }
-                .flowOn(Dispatchers.IO) // flow 스트림을 IO 쓰레드에서 동작
-                .catch {  } // 에러 캐치
-                .collect {  } // 데이터 구독
+                .flowOn(Dispatchers.IO) // Flow 스트림을 IO 쓰레드에서 동작
+                .catch { } // 에러 캐치
+                .collect {
+                    adapter.addItem(it)
+                    adapter.notifyDataSetChanged()
+                } // 데이터 구독
         }
     }
 
     private fun setRecyclerViewAdapter() {
         binding.rvChallenges.apply {
             adapter = this@ChallengeListActivity.adapter
-            addItemDecoration(
-                DividerItemDecoration(
-                    this.context,
-                    (this.layoutManager as LinearLayoutManager).orientation
-                )
-            )
+//            addItemDecoration(
+//                DividerItemDecoration(
+//                    this.context,
+//                    (this.layoutManager as LinearLayoutManager).orientation
+//                )
+//            )
         }
     }
 

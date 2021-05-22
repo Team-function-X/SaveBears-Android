@@ -40,8 +40,13 @@ class ChallengeListAdapter(
                 itemClick(item)
             }
 
+            // Comment 가 없으면 기본 문구 넣음
+            if(item.comment.isNotBlank()){
+                binding.tvComment.text = item.comment
+            }else{
+                binding.tvComment.text = "A Proud Eco Challenge Record"
+            }
             binding.tvDate.text = item.missionCompleteDate
-            binding.tvComment.text = item.comment
 
         }
     }
