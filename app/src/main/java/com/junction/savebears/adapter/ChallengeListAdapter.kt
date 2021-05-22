@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.junction.savebears.databinding.EcoChallengeListItemBinding
-import com.junction.savebears.local.room.ChallengeItem
+import com.junction.savebears.local.room.Challenge
 
 class ChallengeListAdapter(
-    val itemClick: (ChallengeItem) -> Unit
+    private val clickListener: ChallengeSelectionListener
 ) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
-    private var items: List<ChallengeItem> = listOf()
+    private var items: List<Challenge> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
@@ -29,19 +29,19 @@ class ChallengeListAdapter(
         private val binding: EcoChallengeListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ChallengeItem) {
-
-
+        fun bind(item: Challenge) {
             binding.root.setOnClickListener {
-                itemClick(item)
+                clickListener.onChallengeClick(item)
             }
         }
     }
 
-    fun setItem(items: ArrayList<ChallengeItem>) {
+    fun setItem(items: ArrayList<Challenge>) {
         this.items = items
         notifyDataSetChanged()
     }
+}
 
-
+interface ChallengeSelectionListener {
+    fun onChallengeClick(item: Challenge)
 }
