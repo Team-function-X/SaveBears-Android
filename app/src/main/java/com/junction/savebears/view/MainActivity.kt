@@ -34,7 +34,10 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        uiState.value = UiState.loading() // 초기 로딩
+        setContentView(binding.root)
+
+        uiState.value = UiState.empty() // 초기 로딩
+        binding.loadingView.progress.isVisible = false
         setOnListeners()
     }
 

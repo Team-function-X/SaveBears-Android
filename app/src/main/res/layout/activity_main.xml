@@ -2,43 +2,33 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_900">
-
-    <TextView
-        style="@style/Typography.600.Bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="200dp"
-        android:text="Challenge"
-        android:textColor="@color/black_900"
-        android:visibility="gone"
-        tools:ignore="ExtraText" />
+    tools:ignore="ExtraText">
 
     <LinearLayout
         android:id="@+id/challenge_arrived_layout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ImageView
+            android:layout_marginTop="200dp"
+            android:layout_gravity="center_horizontal"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="200dp"
-            android:src="@drawable/ic_water_bottle" />
+            android:src="@drawable/ic_water_bottle"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/notosanscjkkr_bold"
             android:gravity="center"
             android:text="Recycling Plastic\nPET Bottle!"
             android:textColor="@color/black"
             android:textSize="24sp"
+            android:fontFamily="@font/notosanscjkkr_bold"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -48,16 +38,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/margin24"
+        android:layout_margin="24dp"
         android:backgroundTint="@color/blue_500"
         android:src="@drawable/ic_baseline_add_circle_24"
-        android:visibility="gone"
         app:fabCustomSize="70dp"
-        app:iconPadding="@dimen/padding4"
-        app:maxImageSize="@dimen/length40"
+        app:iconPadding="4dp"
+        app:maxImageSize="40dp"
         app:tint="@color/white" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_gravity="bottom"
@@ -69,7 +58,6 @@
         android:textColor="@color/white_900"
         android:textSize="@dimen/text_size24"
         android:translationY="10dp"
-        android:visibility="gone"
         app:icon="@drawable/ic_baseline_eco_24"
         app:iconPadding="@dimen/padding4"
         app:iconTint="@color/white_900"
@@ -80,7 +68,6 @@
         layout="@layout/layout_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

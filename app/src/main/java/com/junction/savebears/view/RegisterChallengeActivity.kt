@@ -2,6 +2,7 @@ package com.junction.savebears.view
 
 import android.app.Activity
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -26,13 +27,14 @@ class RegisterChallengeActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterChallengeBinding
     private val uiState = MutableLiveData<UiState<GlacierResponse>>()
-    var date = Date().toSimpleString()
     private var imageUri: Uri? = null
     var dateStr = "04/05/2010"
+    var date = SimpleDateFormat("yy.MM.dd", Locale.getDefault()).format(Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterChallengeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setOnClicks()
     }
 

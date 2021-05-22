@@ -22,7 +22,12 @@ fun ByteArray.toBitmap(): Bitmap? {
 
 fun Context.drawableToByteArray(resource: Int): ByteArray {
     val drawable = ContextCompat.getDrawable(this, resource) ?: byteArrayOf()
-    val bitmap = (drawable as BitmapDrawable).bitmap
+    if(drawable !is BitmapDrawable){
+        Timber.d("is not BitmapDrawable")
+        return byteArrayOf()
+    }
+
+    val bitmap = drawable.bitmap
     val stream = ByteArrayOutputStream()
     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
 
