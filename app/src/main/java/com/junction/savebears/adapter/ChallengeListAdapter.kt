@@ -38,24 +38,9 @@ class ChallengeListAdapter(
                 clickListener.onChallengeClick(item)
             }
 
-            // 시그니쳐
-            if (item.imageSignature.toBitmap() == null) {
-                binding.ivSignature.setImageBitmap(item.imageSignature.toBitmap())
-            } else {
-                binding.ivSignature.setImageDrawable(ContextCompat.getDrawable(binding.root.context, R.drawable.ic_launcher_foreground))
-            }
-
-            // 실사
-            binding.ivMain.loadUri(item.imageStrUri.toUri()) {
-                placeholder(R.mipmap.ic_launcher)
-                centerCrop()
-            }
-
             // 날짜
-            binding.tvDate.text = item.missionCompleteDate.toSimpleString()
+//            binding.tvDate.text = item.missionCompleteDate.toSimpleString()
 
-            // 코멘트
-            binding.tvComment.text = item.comment
         }
     }
 
