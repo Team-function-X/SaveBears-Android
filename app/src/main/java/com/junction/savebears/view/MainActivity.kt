@@ -43,10 +43,10 @@ class MainActivity : BaseActivity() {
             .clicks()
             .debounce(DEBOUNCED_TIME, TimeUnit.MILLISECONDS, Schedulers.computation())
             .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe({ moveActivity() }, Timber::e)
+            .subscribe(::moveActivity, Timber::e)
     }
 
-    private fun moveActivity() {
+    private fun moveActivity(unit: Unit) {
         startActivity(Intent(this, ChallengeListActivity::class.java))
     }
 
@@ -70,19 +70,14 @@ class MainActivity : BaseActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             val data = flow<GlacierResponse> { saveBearsApi.getGlacierChange() }
             data
-                .catch { }
-                .collect { }
-//            flow<GlacierResponse> {
-//                saveBearsApi.getGlacierChange()
-//                    .catch {
-//                        isFirstTurnOn = false
-//                        uiState.postValue(UiState.error(it.message ?: getString(R.string.unknown_error)))
-//                    }
-//                    .collect {
-//                        isFirstTurnOn = true
-//                        uiState.postValue(UiState.success(it))
-//                    }
-//            }
+                .catch {
+                    isFirstTurnOn = false
+                    uiState.postValue(UiState.error(it.message ?: getString(R.string.unknown_error)))
+                }
+                .collect {
+                    isFirstTurnOn = true
+                    uiState.postValue(UiState.success(it))
+                }
         }
     }
 
