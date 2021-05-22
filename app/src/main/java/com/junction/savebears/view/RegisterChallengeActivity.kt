@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.amplifyframework.core.Amplify
 import com.google.android.material.snackbar.Snackbar
 import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
@@ -81,7 +82,6 @@ class RegisterChallengeActivity : BaseActivity() {
      * - 서버에 챌린지 수행 인증 이미지를 전송
      */
     private fun uploadChallengeImage(image: Uri) {
-
         var comment: String = binding.challengeCommentEditText.text.toString()
 
         // TODO 저장소에서 uri로 get 하기
@@ -91,7 +91,31 @@ class RegisterChallengeActivity : BaseActivity() {
         //   - 실패 -> 다시 시도 로직(기획 필요)
         //   - 통신 중 -> 기획 필요
 
+        Timber.d(image.path)
+        Timber.d(image.lastPathSegment)
+        uploadFileToS3(image)
 
+    }
+
+    /**
+     * Amazon S3 스토리지에 이미지 업로드
+     * - 업로드 성공을 콜백으로 감지하고, Object Detection API 호출
+     */
+    fun uploadFileToS3(image: Uri) {
+        val file = File(image.path!!)
+        val fileName = image.lastPathSegment
+
+        if (fileName != null) {
+            Amplify.Storage.uploadFile(fileName, file,
+                // onSuccess
+                {
+                    Timber.i("Successfully uploaded: ${it.key}")
+                    // TODO Object Detection API 호출
+                },
+                // onFailure
+                { Timber.i("Upload failed$it") }
+            )
+        }
     }
 
     /**
