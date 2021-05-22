@@ -31,6 +31,8 @@
     <color name="black_600">#383838</color>
     <color name="black_300">#3B3B3B</color>
 
+    <color name="gray_icon">#9AA2A9</color>
+
     <color name="gray_000">#FFFFFF</color>
     <color name="gray_100">#EDEDED</color>
     <color name="gray_200">#E0E0E0</color>

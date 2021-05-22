@@ -1,35 +1,33 @@
 package com.junction.savebears.view
 
 import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
-import android.graphics.Bitmap
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.Status
 import com.junction.savebears.component.UiState
+import com.junction.savebears.component.ext.bitmapToFile
 import com.junction.savebears.component.ext.loadUri
+import com.junction.savebears.component.ext.toSimpleString
 import com.junction.savebears.databinding.ActivityRegisterChallengeBinding
 import com.junction.savebears.remote.model.GlacierResponse
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import timber.log.Timber
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
-import kotlin.random.Random
+import java.util.*
 
 class RegisterChallengeActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterChallengeBinding
     private val uiState = MutableLiveData<UiState<GlacierResponse>>()
     private lateinit var imageUri: Uri
+    var date = Date().toSimpleString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +36,7 @@ class RegisterChallengeActivity : BaseActivity() {
     }
 
     private fun setOnClicks() {
-        binding.selectImageView.setOnClickListener {
+        binding.addImageButton.setOnClickListener {
             CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setActivityTitle("Add Image")
@@ -48,9 +46,22 @@ class RegisterChallengeActivity : BaseActivity() {
                 .start(this)
         }
 
+        // Image 수정 버튼
+        binding.editImageButton.setOnClickListener {
+            CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setActivityTitle("Edit Image")
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .setCropMenuCropButtonTitle("Submit")
+                .setRequestedSize(1920, 1080)
+                .start(this)
+        }
+
+        // Image 업로드 버튼 (API 호출)
         binding.uploadImageButton.setOnClickListener {
             uploadChallengeImage(image = imageUri)
         }
+
     }
 
     /**
@@ -86,37 +97,21 @@ class RegisterChallengeActivity : BaseActivity() {
                 // 갤러리에서 삭제되는 상황을 대비하여 앱 전용 로컬 디렉토리에 따로 저장하고, Uri 반환받음
                 val imageUri = bitmapToFile(bitmap!!) // Uri
 
-                // 선택된 이미지를 ImageView 에 적용함
+                binding.addImageButton.visibility = View.GONE
+                binding.uploadedImageCardView.visibility = View.VISIBLE
 
-                binding.selectImageView.loadUri(imageUri) {
+                // 선택된 이미지를 ImageView 에 적용함
+                binding.uploadedImageView.loadUri(imageUri) {
                     placeholder(R.mipmap.ic_launcher)
                 }
+
+                // 현재 날짜를 dateText 에 적용
+                binding.dateText.text = date
+
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Timber.d("이미지 선택 및 편집 오류")
             }
         }
-    }
-
-    /**
-     * Bitmap 이미지를 Local 에 저장하고, URI 를 반환함
-     **/
-    private fun bitmapToFile(bitmap: Bitmap): Uri {
-        val wrapper = ContextWrapper(this)
-        val randomNumber = Random.nextInt(0, 1000000000).toString()
-        // Bitmap 파일 저장을 위한 File 객체
-        var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
-        file = File(file, "item_${randomNumber}.jpg")
-        try {
-            // Bitmap 파일을 JPEG 형태로 압축해서 출력
-            val stream: OutputStream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-            stream.flush()
-            stream.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            Timber.d(e)
-        }
-        return Uri.parse(file.absolutePath)
     }
 
     private fun getChallengeUris() {
