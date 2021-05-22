@@ -9,4 +9,5 @@
 
     <!-- Error   -->
     <string name="unknown_error">unknown error occurred</string>
+    <string name="register_challenge_title">Today Challenge</string>
 </resources>
