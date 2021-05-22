@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.junction.savebears.adapter.GlacierInfoAdapter
 import com.junction.savebears.base.BaseActivity
+import com.junction.savebears.component.ext.openActivity
 import com.junction.savebears.databinding.ActivityGlacierInfoBinding
 
 class GlacierInfoActivity : BaseActivity() {
@@ -18,6 +19,9 @@ class GlacierInfoActivity : BaseActivity() {
         setContentView(binding.root)
         setRecyclerViewAdapter()
         showAllGlacierInfos()
+        binding.btnGraph.setOnClickListener {
+            openActivity(GlacierGraphActivity::class.java)
+        }
     }
 
     private fun setRecyclerViewAdapter() {

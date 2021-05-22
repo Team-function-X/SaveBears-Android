@@ -4,9 +4,6 @@ import com.junction.savebears.remote.model.GlacierResponse
 import retrofit2.http.GET
 
 interface SaveBearsApi {
-
-    @GET("api/")
+    @GET("/api")
     suspend fun getGlacierChange(): GlacierResponse
-//    @PUT("/sample")
-//    suspend fun putImageData(): Response<GlacierResponse>
 }

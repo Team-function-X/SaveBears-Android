@@ -3,7 +3,7 @@ package com.junction.savebears.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.junction.savebears.databinding.EcoChallengeListItemBinding
+import com.junction.savebears.databinding.ChallengeListItemBinding
 import com.junction.savebears.local.room.Challenge
 
 class ChallengeListAdapter(
@@ -14,7 +14,7 @@ class ChallengeListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
-            EcoChallengeListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ChallengeListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -24,13 +24,21 @@ class ChallengeListAdapter(
     override fun getItemCount(): Int = items.count()
 
     inner class ViewHolder(
-        private val binding: EcoChallengeListItemBinding
+        private val binding: ChallengeListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Challenge) {
             binding.root.setOnClickListener {
                 itemClick(item)
             }
+
+            // Comment 가 없으면 기본 문구 넣음
+            if (item.comment.isNotBlank()) {
+                binding.tvComment.text = item.comment
+            } else {
+                binding.tvComment.text = "A Proud Eco Challenge Record"
+            }
+            binding.tvDate.text = item.missionCompleteDate
 
         }
     }

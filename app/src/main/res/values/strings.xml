@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">SaveBears</string>
     <string name="button_challenge_text">Eco Challenge</string>
-    <string name="eco_challenge_description">Take on a variety of challenges to conserve the environment!</string>
-    <string name="eco_challenge_title">Eco Challenge</string>
+    <string name="challenge_list_description">Here is a list of challenges you have done so far.</string>
+    <string name="challenge_list_title">Challenge History</string>
     <string name="register_eco_challenge_title">Register Challenge</string>
     <string name="register_eco_challenge_button_text">Upload</string>
     <string name="register_eco_challenge_description">Upload a challenge verification image!</string>
@@ -21,4 +21,8 @@
     <!-- Floating Action Button   -->
     <string name="floating_title_1">Glacier Info</string>
     <string name="floating_title_2">My Challenge History</string>
+
+
+    <string name="see_graph">See Graph</string>
+    <string name="go_home">Go Home</string>
 </resources>

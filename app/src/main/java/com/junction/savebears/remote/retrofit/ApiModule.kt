@@ -1,5 +1,6 @@
 package com.junction.savebears.remote.retrofit
 
+import com.junction.savebears.remote.api.ChallengeApi
 import com.junction.savebears.remote.api.SaveBearsApi
 import com.junction.savebears.remote.retrofit.RemoteNetworkModule.provideOkHttpClient
 import com.junction.savebears.remote.retrofit.RemoteNetworkModule.provideRetrofit
@@ -14,4 +15,11 @@ object ApiModule {
             .client(provideOkHttpClient().build())
             .build()
             .create(SaveBearsApi::class.java)
+
+    fun challengeApi(): ChallengeApi =
+        provideRetrofit()
+            .baseUrl(GLACIER_BASE_URL)
+            .client(provideOkHttpClient().build())
+            .build()
+            .create(ChallengeApi::class.java)
 }

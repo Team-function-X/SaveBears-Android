@@ -11,4 +11,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected val saveBearsApi
         get() = ApiModule.saveBearsApi()
+
+    protected val challengeApi
+        get() = ApiModule.challengeApi()
 }

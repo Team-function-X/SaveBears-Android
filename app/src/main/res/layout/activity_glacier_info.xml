@@ -54,4 +54,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="gone" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_graph"
+        style="@style/Typography.400.Medium"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/length54"
+        android:background="@color/blue"
+        android:text="@string/see_graph"
+        android:textColor="@color/white_900"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

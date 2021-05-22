@@ -14,8 +14,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SaveBears">
-        <activity android:name=".view.GlacierGraphActivity"></activity>
+        android:theme="@style/Theme.SaveBears"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".view.GlacierGraphActivity" />
         <activity android:name=".view.GlacierInfoActivity" />
         <activity android:name=".view.RegisterChallengeActivity" />
         <activity android:name=".view.MainActivity">
