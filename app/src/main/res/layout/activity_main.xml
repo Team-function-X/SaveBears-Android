@@ -15,7 +15,6 @@
         android:text="Challenge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ecoChallengeButton"
         android:layout_width="wrap_content"
@@ -36,5 +35,25 @@
         android:src="@drawable/ic_polar_1"
         android:layout_width="match_parent"
         android:layout_height="400dp"/>
+        android:layout_margin="@dimen/margin24"
+        android:fontFamily="@font/notosanscjkkr_bold"
+        android:includeFontPadding="false"
+        android:text="@string/button_challenge_text"
+        android:textColor="@color/white_900"
+        android:textSize="@dimen/text_size24"
+        app:icon="@drawable/ic_baseline_eco_24"
+        app:iconPadding="@dimen/padding4"
+        app:iconTint="@color/white_900"
+        tools:ignore="SpUsage" />
+
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/layout_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </FrameLayout>

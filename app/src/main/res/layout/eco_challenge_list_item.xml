@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="#ffffff"
+        android:layout_margin="@dimen/margin8"
+        android:background="@color/white_900"
         android:orientation="vertical"
-        app:cardCornerRadius="18dp"
-        app:cardElevation="8dp">
+        app:cardCornerRadius="@dimen/corner_radius18"
+        app:cardElevation="@dimen/length8">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,27 +20,30 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/placeholder" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Typography.600.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Title"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_marginTop="@dimen/margin16"
+                android:hint="Title"
+                android:textColor="@color/black_900"
+                android:textSize="18sp"
+                tools:ignore="HardcodedText" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Typography.600.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="Date" />
+                android:layout_margin="@dimen/margin16"
+                android:hint="Date"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 

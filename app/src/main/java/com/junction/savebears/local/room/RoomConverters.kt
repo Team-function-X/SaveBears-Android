@@ -2,7 +2,7 @@ package com.junction.savebears.local.room
 
 import androidx.room.TypeConverter
 
-class TypeConverters {
+class RoomConverters {
 
     @TypeConverter
     fun stringToList(string: String): List<String> = provideStringTypeAdapter().fromJson(string).orEmpty()
