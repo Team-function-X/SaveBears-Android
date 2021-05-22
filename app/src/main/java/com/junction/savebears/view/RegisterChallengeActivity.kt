@@ -48,7 +48,7 @@ class RegisterChallengeActivity : BaseActivity() {
         setOnClicks()
     }
 
-    fun setResult(result: MainActivity.Result) {
+    private fun setResult(result: MainActivity.Result) {
         setResult(Activity.RESULT_OK,
             Intent()
                 .apply { putExtras(bundleOf(RESULT_KEY to result)) })
