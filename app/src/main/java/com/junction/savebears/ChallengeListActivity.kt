@@ -15,7 +15,9 @@ class ChallengeListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChallengeListBinding.inflate(layoutInflater)
 
+
         // TODO with api
         saveBearsApi
     }
+
 }
