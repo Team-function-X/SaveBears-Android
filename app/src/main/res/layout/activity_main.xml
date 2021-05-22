@@ -2,49 +2,60 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:ignore="ExtraText">
+    android:layout_height="match_parent">
 
     <TextView
-        android:layout_marginTop="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp"
+        android:text="Challenge"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
         android:textSize="24sp"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:fontFamily="@font/notosanscjkkr_bold"
         android:text="Challenge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ecoChallengeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabCustomSize="70dp"
         android:layout_gravity="end|bottom"
         android:layout_margin="24dp"
-        app:iconPadding="4dp"
         android:backgroundTint="@color/blue_500"
-        app:tint="@color/white"
+        android:src="@drawable/ic_baseline_add_circle_24"
+        app:fabCustomSize="70dp"
+        app:iconPadding="4dp"
         app:maxImageSize="40dp"
-        android:src="@drawable/ic_baseline_add_circle_24"/>
+        app:tint="@color/white" />
 
-    <ImageView
-        android:translationY="10dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="bottom"
-        android:src="@drawable/ic_polar_1"
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
-        android:layout_height="400dp"/>
+        android:layout_height="400dp"
+        android:layout_gravity="bottom"
         android:layout_margin="@dimen/margin24"
         android:fontFamily="@font/notosanscjkkr_bold"
         android:includeFontPadding="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_polar_1"
         android:text="@string/button_challenge_text"
         android:textColor="@color/white_900"
         android:textSize="@dimen/text_size24"
+        android:translationY="10dp"
         app:icon="@drawable/ic_baseline_eco_24"
         app:iconPadding="@dimen/padding4"
         app:iconTint="@color/white_900"
         tools:ignore="SpUsage" />
+        android:layout_height="400dp"/>
 
     <include
         android:id="@+id/loading_view"

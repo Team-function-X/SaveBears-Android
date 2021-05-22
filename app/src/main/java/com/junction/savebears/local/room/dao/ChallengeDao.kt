@@ -10,6 +10,9 @@ interface ChallengeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(roomObject: Challenge)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(roomObject: List<Challenge>)
+
     // 모든 첼린지
     @Transaction
     @Query("SELECT * FROM challenges")
