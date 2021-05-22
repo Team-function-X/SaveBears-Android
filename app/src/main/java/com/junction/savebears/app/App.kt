@@ -1,7 +1,6 @@
 package com.junction.savebears.app
 
 import android.app.Application
-import android.util.Log
 import androidx.room.Room
 import androidx.viewbinding.BuildConfig
 import com.amplifyframework.AmplifyException
@@ -14,14 +13,14 @@ import java.io.File
 
 class App : Application() {
 
-    lateinit var roomDataBase : LocalDataBase
+    lateinit var roomDataBase: LocalDataBase
 
     override fun onCreate() {
         roomDataBase = Room.databaseBuilder(applicationContext, LocalDataBase::class.java, LOCAL_DB_NAME)
             .fallbackToDestructiveMigration()
             .build()
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
         super.onCreate()
@@ -32,9 +31,9 @@ class App : Application() {
             Amplify.addPlugin(AWSS3StoragePlugin())
             Amplify.configure(applicationContext)
 
-            Log.i("MyAmplifyApp", "Initialized Amplify")
+            Timber.i("Initialized Amplify")
         } catch (error: AmplifyException) {
-            Log.e("MyAmplifyApp", "Could not initialize Amplify", error)
+            Timber.i("Could not initialize Amplify: $error")
         }
 
     }
@@ -48,8 +47,8 @@ class App : Application() {
         exampleFile.writeText("Example file contents")
 
         Amplify.Storage.uploadFile("ExampleKey", exampleFile,
-                { Log.i("MyAmplifyApp", "Successfully uploaded: ${it.key}") },
-                { Log.e("MyAmplifyApp", "Upload failed", it) }
+            { Timber.i("Successfully uploaded: ${it.key}") },
+            { Timber.i("Upload failed: $it") }
         )
     }
 }

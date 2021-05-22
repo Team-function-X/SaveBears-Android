@@ -10,8 +10,8 @@ import retrofit2.http.PUT
 interface SaveBearsApi {
 
     @GET("/glacier")
-    fun getGlacierChange(): Flow<GlacierResponse>
+    suspend fun getGlacierChange(): GlacierResponse
 
     @PUT("/sample")
-    fun putImageData(): Flow<Response<GlacierResponse>>
+    suspend fun putImageData(): Response<GlacierResponse>
 }

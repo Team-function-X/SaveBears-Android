@@ -68,24 +68,28 @@ class MainActivity : BaseActivity() {
 
     private fun getGlacierData() {
         lifecycleScope.launch(Dispatchers.IO) {
-            flow<GlacierResponse> {
-                saveBearsApi.getGlacierChange()
-                    .catch {
-                        isFirstTurnOn = false
-                        uiState.postValue(UiState.error(it.message ?: getString(R.string.unknown_error)))
-                    }
-                    .collect {
-                        isFirstTurnOn = true
-                        uiState.postValue(UiState.success(it))
-                    }
-            }
+            val data = flow<GlacierResponse> { saveBearsApi.getGlacierChange() }
+            data
+                .catch { }
+                .collect { }
+//            flow<GlacierResponse> {
+//                saveBearsApi.getGlacierChange()
+//                    .catch {
+//                        isFirstTurnOn = false
+//                        uiState.postValue(UiState.error(it.message ?: getString(R.string.unknown_error)))
+//                    }
+//                    .collect {
+//                        isFirstTurnOn = true
+//                        uiState.postValue(UiState.success(it))
+//                    }
+//            }
         }
     }
 
     private fun refreshGlacierData() {
         lifecycleScope.launch(Dispatchers.IO) {
-
-            saveBearsApi.getGlacierChange()
+            val data = flow<GlacierResponse> { saveBearsApi.getGlacierChange() }
+            data
                 .catch { uiState.postValue(UiState.error(it.message ?: getString(R.string.unknown_error))) }
                 .collect { uiState.postValue(UiState.success(it)) }
         }

@@ -11,5 +11,5 @@ import com.junction.savebears.local.RoomObject
 data class Challenge(
     @PrimaryKey(autoGenerate = true)                          var id:                      Int                  = 1  ,
     @ColumnInfo(name = "image_str_uri")                       val imageStrUri:             String,
-    @ColumnInfo(name = "comment")                             val comment:                 String,
+    @ColumnInfo(name = "comment")                             val comment:                 String
 ) : RoomObject

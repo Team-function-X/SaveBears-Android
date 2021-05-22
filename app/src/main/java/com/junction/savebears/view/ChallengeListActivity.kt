@@ -13,10 +13,13 @@ import com.junction.savebears.component.Status
 import com.junction.savebears.component.UiState
 import com.junction.savebears.databinding.ActivityChallengeListBinding
 import com.junction.savebears.local.room.Challenge
+import com.junction.savebears.remote.api.SaveBearsApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 
 @FlowPreview

@@ -8,7 +8,7 @@ import com.junction.savebears.local.room.dao.ChallengeDao
 @Database(
     entities =
     [
-        Challenge::class,
+        Challenge::class
     ],
     version = 1,
     exportSchema = false
