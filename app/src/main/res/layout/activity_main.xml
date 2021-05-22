@@ -2,33 +2,33 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".view.MainActivity"
     tools:ignore="ExtraText">
 
     <LinearLayout
         android:id="@+id/challenge_arrived_layout"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ImageView
-            android:layout_marginTop="200dp"
-            android:layout_gravity="center_horizontal"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_water_bottle"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="200dp"
+            android:src="@drawable/ic_water_bottle" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/notosanscjkkr_bold"
             android:gravity="center"
             android:text="Recycling Plastic\nPET Bottle!"
             android:textColor="@color/black"
             android:textSize="24sp"
-            android:fontFamily="@font/notosanscjkkr_bold"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -68,6 +68,7 @@
         layout="@layout/layout_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
