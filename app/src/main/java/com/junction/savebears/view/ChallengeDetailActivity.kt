@@ -15,11 +15,11 @@ import com.junction.savebears.local.room.Challenge
 class ChallengeDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChallengeDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_challenge_detail)
-
         binding = ActivityChallengeDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val item = intent.getSerializableExtra(EXTRA_ITEM) as Challenge
 

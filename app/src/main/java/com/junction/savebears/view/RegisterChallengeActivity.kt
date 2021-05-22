@@ -1,10 +1,7 @@
 package com.junction.savebears.view
 
 import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
-import android.graphics.Bitmap
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
@@ -17,18 +14,15 @@ import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.Status
 import com.junction.savebears.component.UiState
+import com.junction.savebears.component.ext.bitmapToFile
 import com.junction.savebears.component.ext.loadUri
+import com.junction.savebears.component.ext.toSimpleString
 import com.junction.savebears.databinding.ActivityRegisterChallengeBinding
 import com.junction.savebears.remote.model.GlacierResponse
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import timber.log.Timber
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
 import java.util.*
-import kotlin.random.Random
 
 class RegisterChallengeActivity : BaseActivity() {
 
@@ -41,6 +35,7 @@ class RegisterChallengeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterChallengeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setOnClicks()
     }
 
@@ -153,28 +148,6 @@ class RegisterChallengeActivity : BaseActivity() {
                 Timber.d("이미지 선택 및 편집 오류")
             }
         }
-    }
-
-    /**
-     * Bitmap 이미지를 Local 에 저장하고, URI 를 반환함
-     **/
-    private fun bitmapToFile(bitmap: Bitmap): Uri {
-        val wrapper = ContextWrapper(this)
-        val randomNumber = Random.nextInt(0, 1000000000).toString()
-        // Bitmap 파일 저장을 위한 File 객체
-        var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
-        file = File(file, "item_${randomNumber}.jpg")
-        try {
-            // Bitmap 파일을 JPEG 형태로 압축해서 출력
-            val stream: OutputStream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-            stream.flush()
-            stream.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            Timber.d(e)
-        }
-        return Uri.parse(file.absolutePath)
     }
 
     private fun getChallengeUris() {

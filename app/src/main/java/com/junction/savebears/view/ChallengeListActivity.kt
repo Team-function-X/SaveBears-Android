@@ -1,10 +1,7 @@
 package com.junction.savebears.view
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +23,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
 import java.util.*
 
 
@@ -45,6 +41,7 @@ class ChallengeListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChallengeListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         toastLong(R.string.app_name)
         setRecyclerViewAdapter()
         showAllChallenges()
@@ -53,7 +50,7 @@ class ChallengeListActivity : BaseActivity() {
     private fun showAllChallenges() {
         lifecycleScope.launch(Dispatchers.IO) {
             if (BuildConfig.DEBUG) {
-                val dummySignatureImage = drawableToByteArray(R.drawable.ic_water_bottle)
+                val dummySignatureImage = drawableToByteArray(R.drawable.dash_border)
                 val dummy = Challenge(
                     missionCompleteDate = Date(),
                     imageSignature = dummySignatureImage,
