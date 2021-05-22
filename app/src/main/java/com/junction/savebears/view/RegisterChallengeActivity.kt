@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import com.amplifyframework.core.Amplify
 import com.google.android.material.snackbar.Snackbar
+import com.jakewharton.rxbinding4.view.visibility
 import com.junction.savebears.BuildConfig
 import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
@@ -68,13 +69,13 @@ class RegisterChallengeActivity : BaseActivity() {
 
         // Image 업로드 버튼 (API 호출)
         binding.uploadImageButton.setOnClickListener {
+            binding.challengeRegisterProgress.visibility = View.VISIBLE
             if ((imageUri != null)) {
                 uploadChallengeImage(image = imageUri!!)
             } else {
                 Snackbar.make(binding.root, "Please Upload Image!", Snackbar.LENGTH_LONG)
             }
         }
-
     }
 
     /**
@@ -101,11 +102,10 @@ class RegisterChallengeActivity : BaseActivity() {
         Amplify.Storage.uploadFile(fileName, file,
             // onSuccess
             {
+                Thread.sleep(2000)
                 Timber.i("Successfully uploaded: ${it.key}")
                 lifecycleScope.launch {
-                    flow {
-                        emit(challengeApi.getChallengeResult(imageName = it.key))
-                    }
+                    flow { emit(challengeApi.getChallengeResult(imageName = it.key)) }
                         .flowOn(Dispatchers.IO)
                         .catch {
                             Timber.e("Error")
@@ -127,6 +127,7 @@ class RegisterChallengeActivity : BaseActivity() {
      * 반환 결과 (점수) 에 따른 다이얼로그를 띄워주는 동작
      */
     private fun resultDialog(point: Int, image: Uri, comment: String) {
+        binding.challengeRegisterProgress.visibility = View.GONE
         val builder = AlertDialog.Builder(this)
 
         if (point >= 1) {  // 챌린지 수행에 성공했을 때

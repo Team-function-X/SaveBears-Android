@@ -8,6 +8,19 @@
     android:background="@color/background"
     tools:context=".view.RegisterChallengeActivity">
 
+    <ProgressBar
+        android:id="@+id/challengeRegisterProgress"
+        android:layout_width="40dp"
+        android:visibility="gone"
+        android:layout_height="40dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="24dp"
+        android:elevation="100dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/blue_500" />
+
+
     <com.xw.repo.widget.BounceScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,26 +32,27 @@
             android:background="@color/background"
             android:orientation="vertical">
 
+
             <TextView
                 style="@style/Typography.600.Bold"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="36dp"
-                android:textSize="24sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Challenge"/>
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="36dp"
+                android:text="Challenge"
+                android:textSize="24sp" />
 
             <TextView
                 style="@style/Typography.600.Light"
-                android:layout_marginHorizontal="24dp"
-                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Do today's challenge!"/>
+                android:layout_marginHorizontal="24dp"
+                android:text="Do today's challenge!"
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="24dp"
                 app:cardCornerRadius="8dp">
@@ -47,18 +61,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingVertical="24dp">
 
                     <TextView
                         style="@style/Typography.600.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/register_challenge_title" />
+                        android:text="@string/register_challenge_title"
+                        android:textSize="18sp" />
 
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginTop="32dp"
+                        android:layout_marginTop="24dp"
                         android:src="@drawable/ic_water_bottle" />
 
                     <TextView
@@ -66,10 +82,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="32dp"
-                        android:layout_marginTop="32dp"
+                        android:layout_marginTop="24dp"
                         android:gravity="center_horizontal"
                         android:text="Please separate the plastic bottle\nand upload the proof photo!"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
