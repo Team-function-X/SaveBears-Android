@@ -6,24 +6,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="ExtraText">
-    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="200dp"
-        android:text="Challenge"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-        android:textSize="24sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:fontFamily="@font/notosanscjkkr_bold"
-        android:text="Challenge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/challenge_arrived_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginTop="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_water_bottle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="Recycling Plastic\nPET Bottle!"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:fontFamily="@font/notosanscjkkr_bold"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ecoChallengeButton"
@@ -42,7 +50,6 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_gravity="bottom"
-        android:layout_margin="@dimen/margin24"
         android:fontFamily="@font/notosanscjkkr_bold"
         android:includeFontPadding="false"
         android:scaleType="centerCrop"
@@ -55,7 +62,6 @@
         app:iconPadding="@dimen/padding4"
         app:iconTint="@color/white_900"
         tools:ignore="SpUsage" />
-        android:layout_height="400dp"/>
 
     <include
         android:id="@+id/loading_view"

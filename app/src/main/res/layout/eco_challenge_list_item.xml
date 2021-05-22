@@ -3,60 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp"
+    android:paddingVertical="16dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_date"
+        style="@style/Typography.600.Medium"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin8"
-        android:background="@color/white_900"
-        android:orientation="vertical"
-        app:cardCornerRadius="@dimen/corner_radius18"
-        app:cardElevation="@dimen/length8">
+        android:text="2021.05.22"
+        android:textColor="@color/gray_700"
+        android:textSize="14sp"
+        tools:ignore="HardcodedText" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_signature"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/placeholder" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_main"
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/placeholder" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_comment"
-                style="@style/Typography.600.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="@dimen/margin16"
-                android:hint="Title"
-                android:textColor="@color/black_900"
-                android:textSize="18sp"
-                tools:ignore="HardcodedText" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_date"
-                style="@style/Typography.600.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin16"
-                android:hint="Date"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_comment"
+        style="@style/Typography.600.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recycling Plastic Pet Bottle"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        tools:ignore="HardcodedText" />
 
 </LinearLayout>
