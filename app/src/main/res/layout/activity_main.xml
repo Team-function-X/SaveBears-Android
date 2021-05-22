@@ -78,28 +78,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/margin20"
-            android:layout_marginRight="@dimen/margin20"
-            android:layout_marginBottom="@dimen/margin20"
-            app:efab_color="@color/black_300"
-            app:efab_icon="@drawable/ic_baseline_add_circle_24"
+            android:layout_marginEnd="@dimen/margin24"
+            app:borderWidth="20dp"
+            android:layout_marginBottom="@dimen/margin24"
+            app:efab_color="@color/blue_700"
+            app:efab_icon="@drawable/ic_baseline_add_circle_outline_24"
             app:efab_orientation="portrait" />
 
         <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/faboption_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_color="@color/gray_300"
-            app:fab_icon="@drawable/ic_baseline_add_circle_24"
+            app:fabSize="normal"
+            app:fab_color="@color/white"
+            app:fab_icon="@drawable/ic_glacier_icon"
             app:fab_orientation="portrait"
             app:label_text="@string/floating_title_1" />
 
         <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/faboption_2"
+            app:fabSize="normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_color="@color/gray_500"
-            app:fab_icon="@drawable/ic_baseline_add_circle_24"
+            app:fab_color="@color/white"
+            app:fab_icon="@drawable/ic_list_icon"
             app:fab_orientation="portrait"
             app:label_text="@string/floating_title_2" />
     </com.nambimobile.widgets.efab.ExpandableFabLayout>
