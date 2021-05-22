@@ -6,11 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.junction.savebears.BuildConfig
+import com.junction.savebears.R
 import com.junction.savebears.adapter.ChallengeListAdapter
 import com.junction.savebears.adapter.ChallengeSelectionListener
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.Status
 import com.junction.savebears.component.UiState
+import com.junction.savebears.component.ext.toastLong
 import com.junction.savebears.databinding.ActivityChallengeListBinding
 import com.junction.savebears.local.room.Challenge
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +21,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 
 @FlowPreview
 class ChallengeListActivity : BaseActivity(), ChallengeSelectionListener {
@@ -30,12 +34,25 @@ class ChallengeListActivity : BaseActivity(), ChallengeSelectionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChallengeListBinding.inflate(layoutInflater)
+        toastLong(R.string.app_name)
         setRecyclerViewAdapter()
         showAllChallenges()
     }
 
-    @FlowPreview
     private fun showAllChallenges() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (BuildConfig.DEBUG) {
+                val dummy = Challenge(missionCompleteDate = Date(), imageSignature = "이미지 시그니쳐", imageStrUri = "이미지 Uri", comment = "코멘트")
+                val dummyDatas = mutableListOf<Challenge>()
+                (1..20).forEachIndexed { i, _ -> dummyDatas.add(dummy.copy(id = i)) }
+                dao.insert(dummyDatas)
+            }
+            getAllChallenges()
+        }
+    }
+
+    @FlowPreview
+    private fun getAllChallenges() {
         lifecycleScope.launch(Dispatchers.IO) {
             dao.getAllChallenges() // 날짜 상관없이 모든 챌린지들을 List 형태로 담아 가져옴
                 .flatMapConcat { list ->
