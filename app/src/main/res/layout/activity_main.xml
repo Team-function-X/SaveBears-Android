@@ -6,18 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:layout_marginTop="200dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="Challenge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ecoChallengeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:fabCustomSize="70dp"
         android:layout_gravity="end|bottom"
         android:layout_margin="24dp"
         app:iconPadding="4dp"
-        android:text="@string/button_challenge_text"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:icon="@drawable/ic_baseline_eco_24"
-        app:iconTint="@color/white" />
+        android:backgroundTint="@color/blue_500"
+        app:tint="@color/white"
+        app:maxImageSize="40dp"
+        android:src="@drawable/ic_baseline_add_circle_24"/>
+
+    <ImageView
+        android:translationY="10dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="bottom"
+        android:src="@drawable/ic_polar_1"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"/>
 
 </FrameLayout>
