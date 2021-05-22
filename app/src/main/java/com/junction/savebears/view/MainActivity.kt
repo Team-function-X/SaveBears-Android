@@ -1,11 +1,14 @@
-package com.junction.savebears
+package com.junction.savebears.view
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.core.view.isVisible
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.jakewharton.rxbinding4.view.clicks
+import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
-import com.junction.savebears.base.isFirstTurnOn
+import com.junction.savebears.component.Status
 import com.junction.savebears.component.UiState
 import com.junction.savebears.databinding.ActivityMainBinding
 import com.junction.savebears.remote.model.GlacierData
@@ -16,19 +19,23 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 @ExperimentalCoroutinesApi
 @FlowPreview
-class MainActivity : BaseActivity<GlacierData>() {
+class MainActivity : BaseActivity() {
 
+    private var isFirstTurnOn = false
     private lateinit var binding: ActivityMainBinding
+    private val uiState = MutableLiveData<UiState<GlacierData>>()
 
-    override fun initBinding() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        uiState.value = UiState.loading(null) // 초기 로딩
+        uiState.value = UiState.loading() // 초기 로딩
         setOnListeners()
     }
 
@@ -62,15 +69,17 @@ class MainActivity : BaseActivity<GlacierData>() {
 
     private fun getGlacierData() {
         lifecycleScope.launch(Dispatchers.IO) {
-            saveBearsApi.getGlacierChange()
-                .catch {
-                    isFirstTurnOn = false
-                    uiState.postValue(UiState.error(it.message ?: getString(R.string.unknown_error)))
-                }
-                .collect {
-                    isFirstTurnOn = true
-                    uiState.postValue(UiState.success(it))
-                }
+            flow<GlacierData> {
+                saveBearsApi.getGlacierChange()
+                    .catch {
+                        isFirstTurnOn = false
+                        uiState.postValue(UiState.error(it.message ?: getString(R.string.unknown_error)))
+                    }
+                    .collect {
+                        isFirstTurnOn = true
+                        uiState.postValue(UiState.success(it))
+                    }
+            }
         }
     }
 
@@ -97,25 +106,28 @@ class MainActivity : BaseActivity<GlacierData>() {
         }
     }
 
-    override fun showSuccessResult(result: UiState<GlacierData>) {
-        binding.progressLoading.isVisible = false
-        showChangesGlacierHeight(result.data)
-    }
-
-    override fun showLoading() {
-        binding.progressLoading.isVisible = true
-    }
-
-    override fun showErrorResult() {
-        binding.progressLoading.isVisible = true
-    }
-
-    override fun showEmptyResult() {
-        binding.progressLoading.isVisible = false
+    override fun observeUiResult() {
+        uiState.observe(this) {
+            when (it.status) {
+                Status.SUCCESS -> { // 성공했을 때
+                    binding.progressLoading.isVisible = false
+                    showChangesGlacierHeight(it.data)
+                }
+                Status.LOADING -> { // 로딩중일 때
+                    binding.progressLoading.isVisible = true
+                }
+                Status.ERROR -> { // 실패했을 때
+                    binding.progressLoading.isVisible = true
+                    Timber.e(it.message)
+                }
+                Status.EMPTY -> { // 데이터가 비었을 때
+                    binding.progressLoading.isVisible = false
+                }
+            }
+        }
     }
 
     companion object {
         private const val DEBOUNCED_TIME = 250L
     }
-
 }

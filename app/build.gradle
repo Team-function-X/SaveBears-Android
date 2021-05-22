@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -55,6 +56,7 @@ dependencies {
 
     // Remote
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
@@ -62,6 +64,10 @@ dependencies {
     // Moshi
     implementation "com.squareup.moshi:moshi-kotlin:1.11.0"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.11.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
 
     // Rx
     implementation 'io.reactivex.rxjava3:rxjava:3.0.9'
@@ -71,6 +77,10 @@ dependencies {
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
 
     // Glide
     def glide_version = "4.12.0"
