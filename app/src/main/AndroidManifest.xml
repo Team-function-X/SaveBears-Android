@@ -17,6 +17,7 @@
         android:theme="@style/Theme.SaveBears">
         <activity android:name=".view.RegisterChallengeActivity" />
         <activity android:name=".view.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
