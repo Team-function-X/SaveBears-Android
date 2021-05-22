@@ -73,6 +73,7 @@ class RegisterChallengeActivity : BaseActivity() {
                 Snackbar.make(binding.root, "Please Upload Image!", Snackbar.LENGTH_LONG)
             }
         }
+
     }
 
     /**
@@ -84,10 +85,12 @@ class RegisterChallengeActivity : BaseActivity() {
         var comment: String = binding.challengeCommentEditText.text.toString()
 
         // TODO 저장소에서 uri로 get 하기
-        //  1. 사진 백엔드에서 요구하는 형식에 맞게 변환 후 Request
+        //  1. contentProvider에 cursor로 접근해 사진 정보를 가져오기
+        //  2. 사진 백엔드에서 요구하는 형식에 맞게 변환 후 Request
         //   - 성공 -> 해당 점수 반영(기획 필요)
         //   - 실패 -> 다시 시도 로직(기획 필요)
         //   - 통신 중 -> 기획 필요
+
 
     }
 
@@ -115,7 +118,7 @@ class RegisterChallengeActivity : BaseActivity() {
                 binding.uploadedImageCardView.visibility = View.VISIBLE
 
                 // 선택된 이미지를 ImageView 에 적용함
-                binding.uploadedImageView.loadUri(imageUri) {
+                binding.uploadImageView.loadUri(imageUri) {
                     placeholder(R.mipmap.ic_launcher)
                 }
 
