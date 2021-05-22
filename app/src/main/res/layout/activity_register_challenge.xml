@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,13 +10,31 @@
 
     <com.xw.repo.widget.BounceScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background"
             android:orientation="vertical">
+
+            <TextView
+                style="@style/Typography.600.Bold"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="36dp"
+                android:textSize="24sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Challenge"/>
+
+            <TextView
+                style="@style/Typography.600.Light"
+                android:layout_marginHorizontal="24dp"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Do today's challenge!"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -61,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
                 app:cardCornerRadius="8dp">
 
                 <LinearLayout
@@ -80,6 +99,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin1"
                             android:src="@drawable/ic_baseline_add_circle_outline_24"
                             app:tint="@color/gray_icon" />
 
@@ -149,81 +169,27 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/uploadImageButton"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/margin32"
-                android:layout_height="60dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/blue_500"
-                app:cardCornerRadius="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_baseline_add_box_24"
-                        app:tint="@color/white" />
-
-                    <TextView
-                        style="@style/Typography.600.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="SUBMIT"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-
-            <!--    <androidx.appcompat.widget.AppCompatTextView-->
-            <!--        style="@style/Typography.600.Bold"-->
-            <!--        android:layout_width="wrap_content"-->
-            <!--        android:layout_height="wrap_content"-->
-            <!--        android:layout_marginTop="@dimen/margin40"-->
-            <!--        android:text="@string/register_eco_challenge_title"-->
-            <!--        android:textSize="24sp"-->
-            <!--        android:textStyle="bold" />-->
-
-            <!--    <androidx.appcompat.widget.AppCompatTextView-->
-            <!--        style="@style/Typography.400.Light"-->
-            <!--        android:layout_width="wrap_content"-->
-            <!--        android:layout_height="wrap_content"-->
-            <!--        android:text="@string/register_eco_challenge_description" />-->
-
-            <!--    <androidx.appcompat.widget.AppCompatImageView-->
-            <!--        android:id="@+id/selectImageView"-->
-            <!--        android:layout_width="match_parent"-->
-            <!--        android:layout_height="300dp"-->
-            <!--        android:layout_marginTop="16dp"-->
-            <!--        android:scaleType="centerCrop"-->
-            <!--        android:src="@drawable/placeholder" />-->
-
-            <!--    <androidx.appcompat.widget.AppCompatButton-->
-            <!--        android:id="@+id/uploadImageButton"-->
-            <!--        android:layout_width="wrap_content"-->
-            <!--        android:layout_height="wrap_content"-->
-            <!--        android:layout_gravity="end"-->
-            <!--        android:layout_marginTop="@dimen/margin8"-->
-            <!--        android:text="@string/register_eco_challenge_button_text" />-->
-
-            <!--    for loading  -->
-            <!--    <include-->
-            <!--        android:id="@+id/loading_progress"-->
-            <!--        layout="@layout/loading_progress"-->
-            <!--        android:layout_width="match_parent"-->
-            <!--        android:layout_height="match_parent" />-->
-
-
         </LinearLayout>
     </com.xw.repo.widget.BounceScrollView>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/uploadImageButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="@color/blue_500"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/Typography.600.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="SUBMIT"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</FrameLayout>

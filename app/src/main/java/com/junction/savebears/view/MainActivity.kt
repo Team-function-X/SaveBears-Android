@@ -29,14 +29,11 @@ class MainActivity : BaseActivity() {
 
     private var isFirstTurnOn = false
     private lateinit var binding: ActivityMainBinding
-    private val uiState = MutableLiveData<UiState<GlacierResponse>>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        uiState.value = UiState.empty() // 초기 로딩
         binding.loadingView.progress.isVisible = false
         setOnListeners()
     }
@@ -79,15 +76,9 @@ class MainActivity : BaseActivity() {
             data
                 .catch {
                     isFirstTurnOn = false
-                    uiState.postValue(
-                        UiState.error(
-                            it.message ?: getString(R.string.unknown_error)
-                        )
-                    )
                 }
                 .collect {
                     isFirstTurnOn = true
-                    uiState.postValue(UiState.success(it))
                 }
         }
     }
@@ -97,13 +88,9 @@ class MainActivity : BaseActivity() {
             val data = flow<GlacierResponse> { saveBearsApi.getGlacierChange() }
             data
                 .catch {
-                    uiState.postValue(
-                        UiState.error(
-                            it.message ?: getString(R.string.unknown_error)
-                        )
-                    )
+
                 }
-                .collect { uiState.postValue(UiState.success(it)) }
+                .collect {  }
         }
 
 //            glacierDataLiveData = liveData(Dispatchers.IO) {
@@ -122,26 +109,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun observeUiResult() {
-        uiState.observe(this) {
-            when (it.status) {
-                Status.SUCCESS -> { // 성공했을 때
-                    binding.loadingView.progress.isVisible = false
-                    showChangesGlacierHeight(it.data)
-                }
-                Status.LOADING -> { // 로딩중일 때
-                    binding.loadingView.progress.isVisible = true
-                }
-                Status.ERROR -> { // 실패했을 때
-                    binding.loadingView.progress.isVisible = true
-                    Timber.e(it.message)
-                }
-                Status.EMPTY -> { // 데이터가 비었을 때
-                    binding.loadingView.progress.isVisible = false
-                }
-            }
-        }
-    }
 
     companion object {
         private const val DEBOUNCED_TIME = 250L

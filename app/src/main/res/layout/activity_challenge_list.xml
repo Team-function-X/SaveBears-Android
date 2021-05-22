@@ -5,25 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/padding16"
     tools:context=".view.MainActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginHorizontal="24dp"
         style="@style/Typography.600.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin40"
-        android:text="@string/eco_challenge_title" />
+        android:text="@string/challenge_list_title" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginHorizontal="24dp"
         style="@style/Typography.400.Light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/eco_challenge_description" />
+        android:text="@string/challenge_list_description" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_challenges"
-        tools:listitem="@layout/eco_challenge_list_item"
+        tools:listitem="@layout/challenge_list_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin16"

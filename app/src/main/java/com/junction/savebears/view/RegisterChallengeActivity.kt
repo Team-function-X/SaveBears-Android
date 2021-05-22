@@ -7,20 +7,33 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.amplifyframework.core.Amplify
 import com.google.android.material.snackbar.Snackbar
+import com.junction.savebears.BuildConfig
 import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.Status
 import com.junction.savebears.component.UiState
 import com.junction.savebears.component.ext.bitmapToFile
+import com.junction.savebears.component.ext.drawableToByteArray
 import com.junction.savebears.component.ext.loadUri
 import com.junction.savebears.component.ext.toSimpleString
 import com.junction.savebears.databinding.ActivityRegisterChallengeBinding
+import com.junction.savebears.local.room.Challenge
+import com.junction.savebears.remote.model.ChallengeResponse
 import com.junction.savebears.remote.model.GlacierResponse
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
+import org.w3c.dom.Comment
 import timber.log.Timber
 import java.io.File
 import java.util.*
@@ -28,7 +41,7 @@ import java.util.*
 class RegisterChallengeActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterChallengeBinding
-    private val uiState = MutableLiveData<UiState<GlacierResponse>>()
+    private val dao get() = roomDatabase.challengeDao()
     private var imageUri: Uri? = null
     var date = SimpleDateFormat("yy.MM.dd", Locale.getDefault()).format(Date())
 
@@ -46,7 +59,7 @@ class RegisterChallengeActivity : BaseActivity() {
                 .setActivityTitle("Add Image")
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
                 .setCropMenuCropButtonTitle("Submit")
-                .setRequestedSize(500, 500)
+                .setRequestedSize(1000, 1000)
                 .start(this)
         }
 
@@ -57,7 +70,7 @@ class RegisterChallengeActivity : BaseActivity() {
                 .setActivityTitle("Edit Image")
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
                 .setCropMenuCropButtonTitle("Submit")
-                .setRequestedSize(500, 500)
+                .setRequestedSize(1000, 1000)
                 .start(this)
         }
 
@@ -88,7 +101,7 @@ class RegisterChallengeActivity : BaseActivity() {
 
         Timber.d(image.path)
         Timber.d(image.lastPathSegment)
-        uploadFileToS3(image)
+        uploadFileToS3(image, comment)
 
     }
 
@@ -96,21 +109,73 @@ class RegisterChallengeActivity : BaseActivity() {
      * Amazon S3 스토리지에 이미지 업로드
      * - 업로드 성공을 콜백으로 감지하고, Object Detection API 호출
      */
-    fun uploadFileToS3(image: Uri) {
+    fun uploadFileToS3(image: Uri, comment: String) {
         val file = File(image.path!!)
-        val fileName = image.lastPathSegment
+        val fileName = image.lastPathSegment.toString()
 
-        Timber.d("Progress In UploadFileToS3 ...")
-        if (fileName != null) {
-            Amplify.Storage.uploadFile(fileName, file,
-                // onSuccess
-                {
-                    Timber.i("Successfully uploaded: ${it.key}")
-                    // TODO Object Detection API 호출
-                },
-                // onFailure
-                { Timber.i("Upload failed$it") }
-            )
+        Timber.d("Progress In Upload File To S3 ...")
+        Amplify.Storage.uploadFile(fileName, file,
+            // onSuccess
+            {
+                Timber.i("Successfully uploaded: ${it.key}")
+                lifecycleScope.launch {
+                    flow {
+                        emit(challengeApi.getChallengeResult(imageName = it.key))
+                    }
+                        .flowOn(Dispatchers.IO)
+                        .catch {
+                            Timber.e("Error")
+                            Timber.e(it)
+                        }
+                        .collect {
+                            Timber.d(it.point.toString())
+                            resultDialog(point = it.point, image = image, comment = comment)
+                        }
+                }
+            },
+            // onFailure
+            { Timber.i("Upload failed$it") }
+        )
+    }
+
+    private fun resultDialog(point: Int, image: Uri, comment: String) {
+        val builder = AlertDialog.Builder(this)
+
+        if (point >= 1) {
+            builder.apply {
+                this.setMessage("Challenge success! Would you like to record your success?")
+                this.setNegativeButton("NO") { _, _ ->
+                    finish()
+                }
+                this.setPositiveButton("YES") { _, _ ->
+                    // Challenge 수행 내용을 Room DB 에 저장
+                    insertChallenge(image, comment)
+                    finish()
+                }
+            }
+            builder.show()
+        } else {
+            builder.apply {
+                this.setMessage("Challenge failed. Please take a picture again or upload another picture.")
+                this.setNegativeButton("NO") { _, _ -> }
+                this.setPositiveButton("YES") { _, _ -> }
+            }
+            builder.show()
+        }
+
+    }
+
+    private fun insertChallenge(image: Uri, comment: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (BuildConfig.DEBUG) {
+                val challengeEntity = Challenge(
+                    missionCompleteDate = date,
+                    imageSignature = contentResolver.openInputStream(image)?.readBytes()!!,
+                    imageStrUri = image.toString(),
+                    comment = comment
+                )
+                dao.insert(challengeEntity)
+            }
         }
     }
 
@@ -119,7 +184,7 @@ class RegisterChallengeActivity : BaseActivity() {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        // TODO 사진을 특정 naming의 파일로 저장하기
+        // TODO 사진을 특정 naming 의 파일로 저장하기
         //  형식 : 앱이름 + yyyy_MM_dd_hhmmss 추천
 
         // 업로드를 위한 사진이 선택 및 편집되면 Uri 형태로 결과가 반환됨
@@ -156,21 +221,5 @@ class RegisterChallengeActivity : BaseActivity() {
 
     private fun getChallengeUris() {
 
-    }
-
-    override fun observeUiResult() {
-        uiState.observe(this) {
-            when (it.status) {
-                Status.SUCCESS -> { // 성공했을 때
-                }
-                Status.LOADING -> { // 로딩중일 때
-                }
-                Status.ERROR -> { // 실패했을 때
-                    Timber.e(it.message)
-                }
-                Status.EMPTY -> { // 데이터가 비었을 때
-                }
-            }
-        }
     }
 }
