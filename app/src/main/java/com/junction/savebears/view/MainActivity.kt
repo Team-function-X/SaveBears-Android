@@ -35,7 +35,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         uiState.value = UiState.empty() // 초기 로딩
         binding.loadingView.progress.isVisible = false
         setOnListeners()
@@ -105,15 +104,6 @@ class MainActivity : BaseActivity() {
                 }
                 .collect { uiState.postValue(UiState.success(it)) }
         }
-
-//            glacierDataLiveData = liveData(Dispatchers.IO) {
-//            saveBearsApi.getGlacierChange().asCallbackFlow().catch { e ->
-//                // 에러 스트림 처리
-//                Timber.d(e)
-//            }.collect {
-//                // 최종적으로 데이터 스트림 받고 LiveData 로 Emit 함
-//                this.emit(it)
-//            }
     }
 
     private fun showChangesGlacierHeight(response: GlacierResponse?) {

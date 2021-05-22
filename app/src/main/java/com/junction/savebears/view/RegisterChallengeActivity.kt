@@ -16,12 +16,12 @@ import com.junction.savebears.component.Status
 import com.junction.savebears.component.UiState
 import com.junction.savebears.component.ext.bitmapToFile
 import com.junction.savebears.component.ext.loadUri
-import com.junction.savebears.component.ext.toSimpleString
 import com.junction.savebears.databinding.ActivityRegisterChallengeBinding
 import com.junction.savebears.remote.model.GlacierResponse
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import timber.log.Timber
+import java.io.File
 import java.util.*
 
 class RegisterChallengeActivity : BaseActivity() {
