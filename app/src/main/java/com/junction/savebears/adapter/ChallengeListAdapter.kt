@@ -2,28 +2,32 @@ package com.junction.savebears.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.junction.savebears.R
+import com.junction.savebears.component.ext.loadUri
+import com.junction.savebears.component.ext.toBitmap
+import com.junction.savebears.component.ext.toSimpleString
 import com.junction.savebears.databinding.EcoChallengeListItemBinding
 import com.junction.savebears.local.room.Challenge
 
 class ChallengeListAdapter(
     private val clickListener: ChallengeSelectionListener
 ) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
-    private var items: List<Challenge> = listOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
+    private val items = mutableListOf<Challenge>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(
             EcoChallengeListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
+        )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(items[position])
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.count()
 
     inner class ViewHolder(
         private val binding: EcoChallengeListItemBinding
@@ -33,11 +37,30 @@ class ChallengeListAdapter(
             binding.root.setOnClickListener {
                 clickListener.onChallengeClick(item)
             }
+
+            // 시그니쳐
+            if (item.imageSignature.toBitmap() == null) {
+                binding.ivSignature.setImageBitmap(item.imageSignature.toBitmap())
+            } else {
+                binding.ivSignature.setImageDrawable(ContextCompat.getDrawable(binding.root.context, R.drawable.ic_launcher_foreground))
+            }
+
+            // 실사
+            binding.ivMain.loadUri(item.imageStrUri.toUri()) {
+                placeholder(R.mipmap.ic_launcher)
+                centerCrop()
+            }
+
+            // 날짜
+            binding.tvDate.text = item.missionCompleteDate.toSimpleString()
+
+            // 코멘트
+            binding.tvComment.text = item.comment
         }
     }
 
-    fun setItem(items: ArrayList<Challenge>) {
-        this.items = items
+    fun addItem(items: List<Challenge>) { // 레퍼런스 타입이므로 분리
+        this.items.addAll(items)
         notifyDataSetChanged()
     }
 }

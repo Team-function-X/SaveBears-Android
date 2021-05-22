@@ -2,11 +2,11 @@ package com.junction.savebears.app
 
 import android.app.Application
 import androidx.room.Room
-import androidx.viewbinding.BuildConfig
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin
+import com.junction.savebears.BuildConfig
 import com.junction.savebears.local.room.LocalDataBase
 import timber.log.Timber
 import java.io.File

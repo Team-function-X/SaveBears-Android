@@ -1,16 +1,23 @@
 package com.junction.savebears.view
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.junction.savebears.BuildConfig
+import com.junction.savebears.R
 import com.junction.savebears.adapter.ChallengeListAdapter
 import com.junction.savebears.adapter.ChallengeSelectionListener
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.Status
 import com.junction.savebears.component.UiState
+import com.junction.savebears.component.ext.drawableToByteArray
+import com.junction.savebears.component.ext.toastLong
 import com.junction.savebears.databinding.ActivityChallengeListBinding
 import com.junction.savebears.local.room.Challenge
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +25,9 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import java.util.*
+
 
 @FlowPreview
 class ChallengeListActivity : BaseActivity(), ChallengeSelectionListener {
@@ -30,12 +40,25 @@ class ChallengeListActivity : BaseActivity(), ChallengeSelectionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChallengeListBinding.inflate(layoutInflater)
+        toastLong(R.string.app_name)
         setRecyclerViewAdapter()
         showAllChallenges()
     }
 
-    @FlowPreview
     private fun showAllChallenges() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (BuildConfig.DEBUG) {
+                val dummySignatureImage = drawableToByteArray(R.drawable.ic_water_bottle)
+                val dummy = Challenge(missionCompleteDate = Date(), imageSignature = dummySignatureImage, imageStrUri = "이미지 Uri", comment = "코멘트")
+                val dummyDatas = mutableListOf<Challenge>()
+                (1..20).forEachIndexed { i, _ -> dummyDatas.add(dummy.copy(id = i)) }
+                dao.insert(dummyDatas)
+            }
+            getAllChallenges()
+        }
+    }
+
+    private fun getAllChallenges() {
         lifecycleScope.launch(Dispatchers.IO) {
             dao.getAllChallenges() // 날짜 상관없이 모든 챌린지들을 List 형태로 담아 가져옴
                 .flatMapConcat { list ->
@@ -72,6 +95,7 @@ class ChallengeListActivity : BaseActivity(), ChallengeSelectionListener {
             when (it.status) {
                 Status.SUCCESS -> { // 성공했을 때
                     binding.loadingView.progress.isVisible = false
+                    adapter.addItem(it.data ?: listOf())
                 }
                 Status.LOADING -> { // 로딩중일 때
                     binding.loadingView.progress.isVisible = true
