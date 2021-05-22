@@ -10,4 +10,5 @@
     <!-- Error   -->
     <string name="unknown_error">unknown error occurred</string>
     <string name="register_challenge_title">Today Challenge</string>
+    <string name="not_registered_comment">You have not registered a comment.</string>
 </resources>

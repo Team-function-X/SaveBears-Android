@@ -2,12 +2,12 @@ package com.junction.savebears.view
 
 import android.app.Activity
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.snackbar.Snackbar
 import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.Status
@@ -26,8 +26,9 @@ class RegisterChallengeActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterChallengeBinding
     private val uiState = MutableLiveData<UiState<GlacierResponse>>()
-    private lateinit var imageUri: Uri
     var date = Date().toSimpleString()
+    private var imageUri: Uri? = null
+    var dateStr = "04/05/2010"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +60,11 @@ class RegisterChallengeActivity : BaseActivity() {
 
         // Image 업로드 버튼 (API 호출)
         binding.uploadImageButton.setOnClickListener {
-            uploadChallengeImage(image = imageUri)
+            if ((imageUri != null)) {
+                uploadChallengeImage(image = imageUri!!)
+            } else {
+                Snackbar.make(binding.root, "Please Upload Image!", Snackbar.LENGTH_LONG)
+            }
         }
 
     }
@@ -69,12 +74,17 @@ class RegisterChallengeActivity : BaseActivity() {
      * - 서버에 챌린지 수행 인증 이미지를 전송
      */
     private fun uploadChallengeImage(image: Uri) {
+
+        var comment: String = binding.challengeCommentEditText.text.toString()
+
         // TODO 저장소에서 uri로 get 하기
         //  1. contentProvider에 cursor로 접근해 사진 정보를 가져오기
         //  2. 사진 백엔드에서 요구하는 형식에 맞게 변환 후 Request
         //   - 성공 -> 해당 점수 반영(기획 필요)
         //   - 실패 -> 다시 시도 로직(기획 필요)
         //   - 통신 중 -> 기획 필요
+
+
     }
 
     /**
@@ -101,7 +111,7 @@ class RegisterChallengeActivity : BaseActivity() {
                 binding.uploadedImageCardView.visibility = View.VISIBLE
 
                 // 선택된 이미지를 ImageView 에 적용함
-                binding.uploadedImageView.loadUri(imageUri) {
+                binding.uploadImageView.loadUri(imageUri) {
                     placeholder(R.mipmap.ic_launcher)
                 }
 

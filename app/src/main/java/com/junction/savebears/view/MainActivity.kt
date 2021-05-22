@@ -44,6 +44,10 @@ class MainActivity : BaseActivity() {
             .debounce(DEBOUNCED_TIME, TimeUnit.MILLISECONDS, Schedulers.computation())
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe(::moveActivity, Timber::e)
+
+        binding.challengeArrivedLayout.setOnClickListener {
+            startActivity(Intent(this, RegisterChallengeActivity::class.java))
+        }
     }
 
     private fun moveActivity(unit: Unit) {
@@ -72,7 +76,11 @@ class MainActivity : BaseActivity() {
             data
                 .catch {
                     isFirstTurnOn = false
-                    uiState.postValue(UiState.error(it.message ?: getString(R.string.unknown_error)))
+                    uiState.postValue(
+                        UiState.error(
+                            it.message ?: getString(R.string.unknown_error)
+                        )
+                    )
                 }
                 .collect {
                     isFirstTurnOn = true
@@ -85,7 +93,13 @@ class MainActivity : BaseActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             val data = flow<GlacierResponse> { saveBearsApi.getGlacierChange() }
             data
-                .catch { uiState.postValue(UiState.error(it.message ?: getString(R.string.unknown_error))) }
+                .catch {
+                    uiState.postValue(
+                        UiState.error(
+                            it.message ?: getString(R.string.unknown_error)
+                        )
+                    )
+                }
                 .collect { uiState.postValue(UiState.success(it)) }
         }
 
