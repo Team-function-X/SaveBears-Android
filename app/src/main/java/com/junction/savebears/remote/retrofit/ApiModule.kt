@@ -8,7 +8,7 @@ object ApiModule {
 
     fun saveBearsApi(): SaveBearsApi =
         provideRetrofit()
-            .baseUrl("") // TODO baseUrl 추가
+            .baseUrl("https://google.com") // TODO baseUrl 추가
             .client(provideOkHttpClient().build())
             .build()
             .create(SaveBearsApi::class.java)

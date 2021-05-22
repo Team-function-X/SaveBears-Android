@@ -6,4 +6,7 @@
     <string name="register_eco_challenge_title">Register Challenge</string>
     <string name="register_eco_challenge_button_text">Upload</string>
     <string name="register_eco_challenge_description">Upload a challenge verification image!</string>
+
+    <!-- Error   -->
+    <string name="unknown_error">unknown error occurred</string>
 </resources>
