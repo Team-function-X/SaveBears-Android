@@ -1,5 +1,6 @@
 package com.junction.savebears.view
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -12,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.junction.savebears.BuildConfig
 import com.junction.savebears.R
 import com.junction.savebears.adapter.ChallengeListAdapter
-import com.junction.savebears.adapter.ChallengeSelectionListener
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.Status
 import com.junction.savebears.component.UiState
@@ -20,6 +20,7 @@ import com.junction.savebears.component.ext.drawableToByteArray
 import com.junction.savebears.component.ext.toastLong
 import com.junction.savebears.databinding.ActivityChallengeListBinding
 import com.junction.savebears.local.room.Challenge
+import com.junction.savebears.view.ChallengeDetailActivity.Companion.EXTRA_ITEM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -30,12 +31,16 @@ import java.util.*
 
 
 @FlowPreview
-class ChallengeListActivity : BaseActivity(), ChallengeSelectionListener {
+class ChallengeListActivity : BaseActivity() {
 
     private lateinit var binding: ActivityChallengeListBinding
     private val dao get() = roomDatabase.challengeDao()
-    private val adapter = ChallengeListAdapter(this)
     private val uiState = MutableLiveData<UiState<List<Challenge>?>>()
+    private val adapter = ChallengeListAdapter {
+        val intent = Intent(this, ChallengeDetailActivity::class.java)
+        intent.putExtra(EXTRA_ITEM, it)
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +54,12 @@ class ChallengeListActivity : BaseActivity(), ChallengeSelectionListener {
         lifecycleScope.launch(Dispatchers.IO) {
             if (BuildConfig.DEBUG) {
                 val dummySignatureImage = drawableToByteArray(R.drawable.ic_water_bottle)
-                val dummy = Challenge(missionCompleteDate = Date(), imageSignature = dummySignatureImage, imageStrUri = "이미지 Uri", comment = "코멘트")
+                val dummy = Challenge(
+                    missionCompleteDate = Date(),
+                    imageSignature = dummySignatureImage,
+                    imageStrUri = "이미지 Uri",
+                    comment = "코멘트"
+                )
                 val dummyDatas = mutableListOf<Challenge>()
                 (1..20).forEachIndexed { i, _ -> dummyDatas.add(dummy.copy(id = i)) }
                 dao.insert(dummyDatas)
@@ -109,9 +119,5 @@ class ChallengeListActivity : BaseActivity(), ChallengeSelectionListener {
                 }
             }
         }
-    }
-
-    override fun onChallengeClick(item: Challenge) {
-        // TODO 리스트 아이템 클릭 이벤트
     }
 }

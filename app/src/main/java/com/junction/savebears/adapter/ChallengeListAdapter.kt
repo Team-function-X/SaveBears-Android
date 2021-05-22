@@ -1,5 +1,6 @@
 package com.junction.savebears.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -11,10 +12,11 @@ import com.junction.savebears.component.ext.toBitmap
 import com.junction.savebears.component.ext.toSimpleString
 import com.junction.savebears.databinding.EcoChallengeListItemBinding
 import com.junction.savebears.local.room.Challenge
+import com.junction.savebears.view.ChallengeDetailActivity
 
 class ChallengeListAdapter(
-    private val clickListener: ChallengeSelectionListener
-) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
+    val itemClick: (Challenge) -> Unit,
+    ) : RecyclerView.Adapter<ChallengeListAdapter.ViewHolder>() {
 
     private val items = mutableListOf<Challenge>()
 
@@ -35,11 +37,8 @@ class ChallengeListAdapter(
 
         fun bind(item: Challenge) {
             binding.root.setOnClickListener {
-                clickListener.onChallengeClick(item)
+                itemClick(item)
             }
-
-            // 날짜
-//            binding.tvDate.text = item.missionCompleteDate.toSimpleString()
 
         }
     }
@@ -48,8 +47,4 @@ class ChallengeListAdapter(
         this.items.addAll(items)
         notifyDataSetChanged()
     }
-}
-
-interface ChallengeSelectionListener {
-    fun onChallengeClick(item: Challenge)
 }

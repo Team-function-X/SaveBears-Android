@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.junction.savebears.local.RoomObject
+import java.io.Serializable
 import java.util.*
 
 @Entity(
@@ -15,7 +16,7 @@ data class Challenge(
     @ColumnInfo(name = "image_signature", typeAffinity = ColumnInfo.BLOB)                  val imageSignature:          ByteArray                 ,
     @ColumnInfo(name = "image_str_uri")                                                    val imageStrUri:             String                    ,
     @ColumnInfo(name = "comment")                                                          val comment:                 String                    ,
-) : RoomObject {
+) : RoomObject, Serializable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
