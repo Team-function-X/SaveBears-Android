@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.SaveBears" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black_900</item>
-        <item name="colorPrimaryVariant">@color/black_900</item>
-        <item name="colorOnPrimary">@color/black_900</item>
+        <item name="colorPrimary">@color/background</item>
+        <item name="colorPrimaryVariant">@color/background</item>
+        <item name="colorOnPrimary">@color/background</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/white_900</item>
         <item name="colorSecondaryVariant">@color/white_900</item>

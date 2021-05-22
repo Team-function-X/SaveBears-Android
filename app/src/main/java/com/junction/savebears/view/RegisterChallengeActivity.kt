@@ -22,6 +22,7 @@ import com.junction.savebears.remote.model.GlacierResponse
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import timber.log.Timber
+import java.io.File
 import java.util.*
 
 class RegisterChallengeActivity : BaseActivity() {
@@ -29,7 +30,6 @@ class RegisterChallengeActivity : BaseActivity() {
     private lateinit var binding: ActivityRegisterChallengeBinding
     private val uiState = MutableLiveData<UiState<GlacierResponse>>()
     private var imageUri: Uri? = null
-    var dateStr = "04/05/2010"
     var date = SimpleDateFormat("yy.MM.dd", Locale.getDefault()).format(Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class RegisterChallengeActivity : BaseActivity() {
                 .setActivityTitle("Add Image")
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
                 .setCropMenuCropButtonTitle("Submit")
-                .setRequestedSize(1920, 1080)
+                .setRequestedSize(500, 500)
                 .start(this)
         }
 
@@ -57,7 +57,7 @@ class RegisterChallengeActivity : BaseActivity() {
                 .setActivityTitle("Edit Image")
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
                 .setCropMenuCropButtonTitle("Submit")
-                .setRequestedSize(1920, 1080)
+                .setRequestedSize(500, 500)
                 .start(this)
         }
 
@@ -100,6 +100,7 @@ class RegisterChallengeActivity : BaseActivity() {
         val file = File(image.path!!)
         val fileName = image.lastPathSegment
 
+        Timber.d("Progress In UploadFileToS3 ...")
         if (fileName != null) {
             Amplify.Storage.uploadFile(fileName, file,
                 // onSuccess
@@ -131,15 +132,18 @@ class RegisterChallengeActivity : BaseActivity() {
                 val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
 
                 // 갤러리에서 삭제되는 상황을 대비하여 앱 전용 로컬 디렉토리에 따로 저장하고, Uri 반환받음
-                val imageUri = bitmapToFile(bitmap!!) // Uri
+                val storedImageUri = bitmapToFile(bitmap!!) // Uri
 
                 binding.addImageButton.visibility = View.GONE
                 binding.uploadedImageCardView.visibility = View.VISIBLE
 
                 // 선택된 이미지를 ImageView 에 적용함
-                binding.uploadImageView.loadUri(imageUri) {
+                binding.uploadImageView.loadUri(resultUri) {
                     placeholder(R.mipmap.ic_launcher)
                 }
+                imageUri = resultUri
+                Timber.d(storedImageUri.toString())
+                Timber.d(resultUri.toString())
 
                 // 현재 날짜를 dateText 에 적용
                 binding.dateText.text = date
