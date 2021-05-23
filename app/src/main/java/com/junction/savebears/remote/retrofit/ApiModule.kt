@@ -7,11 +7,10 @@ import com.junction.savebears.remote.retrofit.RemoteNetworkModule.provideRetrofi
 
 object ApiModule {
 
-    private const val GLACIER_BASE_URL = "https://b7r6884n9b.execute-api.ap-northeast-2.amazonaws.com/"
 
     fun saveBearsApi(): SaveBearsApi =
         provideRetrofit()
-            .baseUrl(GLACIER_BASE_URL)
+            .baseUrl("https://b7r6884n9b.execute-api.ap-northeast-2.amazonaws.com/")
             .client(provideOkHttpClient().build())
             .build()
             .create(SaveBearsApi::class.java)
