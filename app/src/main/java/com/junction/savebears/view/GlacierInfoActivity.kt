@@ -87,7 +87,7 @@ class GlacierInfoActivity : BaseActivity() {
                     glacierInfos.add(it.data2014)
 
                     totalChanges += (it.data1984.changeAmount + it.data1994.changeAmount + it.data2004.changeAmount + it.data2014.changeAmount)
-                    binding.tvCommentTop.text = "현재 지구의 빙하는 1980년부터\n7%씩 감소해서 ${totalChanges}%입니다."
+                    binding.tvCommentTop.text = "현재 지구의 빙하는 1980년에 비해\n약 ${totalChanges}% 감소하였습니다."
 
                     adapter.addItem(glacierInfos)
 
