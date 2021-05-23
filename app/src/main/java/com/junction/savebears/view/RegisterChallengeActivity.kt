@@ -12,7 +12,6 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.amplifyframework.core.Amplify
 import com.google.android.material.snackbar.Snackbar
-import com.junction.savebears.BuildConfig
 import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.ext.bitmapToFile
@@ -166,7 +165,6 @@ class RegisterChallengeActivity : BaseActivity() {
 
     private fun insertChallenge(image: Uri, comment: String) {
         lifecycleScope.launch(Dispatchers.IO) {
-            if (BuildConfig.DEBUG) {
                 val challengeEntity = Challenge(
                     missionCompleteDate = date,
                     imageSignature = contentResolver.openInputStream(image)?.readBytes()!!,
@@ -174,7 +172,6 @@ class RegisterChallengeActivity : BaseActivity() {
                     comment = comment
                 )
                 dao.insert(challengeEntity)
-            }
         }
     }
 

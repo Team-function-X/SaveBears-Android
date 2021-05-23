@@ -34,7 +34,7 @@
         android:layout_width="0dp"
         android:layout_height="470dp"
         android:layout_marginStart="@dimen/margin20"
-        android:background="@android:color/transparent"
+        android:background="@android:color/black"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,19 +43,19 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_comment_top"
         tools:listitem="@layout/rv_glacier_info" />
 
-    <include
-        android:id="@+id/loading_view"
-        layout="@layout/layout_progress"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <com.github.mikephil.charting.charts.CombinedChart
+        android:id="@+id/mp_chart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin50"
+        android:layout_marginBottom="@dimen/margin54"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_comment_top" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_graph"
+        android:id="@+id/btn_bottom_menu"
         style="@style/Typography.400.Medium"
         android:layout_width="0dp"
         android:layout_height="@dimen/length54"
@@ -65,5 +65,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/layout_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
