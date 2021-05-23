@@ -17,6 +17,7 @@ import com.junction.savebears.R
 import com.junction.savebears.adapter.GlacierInfoAdapter
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.databinding.ActivityGlacierInfoBinding
+import com.junction.savebears.model.Glacier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -36,7 +37,6 @@ class GlacierInfoActivity : BaseActivity() {
         binding = ActivityGlacierInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setRecyclerViewAdapter()
-        showAllGlacierInfos()
         showGraph()
         binding.btnBottomMenu.setOnClickListener {
             isRight = !isRight
@@ -65,11 +65,16 @@ class GlacierInfoActivity : BaseActivity() {
                 )
             )
         }
+
+        showAllGlacierInfos()
     }
 
     private fun showAllGlacierInfos() {
-        // 성공 시 보여주기
-        adapter.addItem(listOf())
+        val dummyUrl = "https://c402277.ssl.cf1.rackcdn.com/photos/3218/images/blog_show/Alaska_June_2010_053.jpg?1357107480"
+        val dummy = Glacier(dummyUrl, "2020-02-21")
+        val list = mutableListOf<Glacier>()
+        (0..9).forEach { list.add(dummy) }
+        adapter.addItem(list)
     }
 
     private fun showGraph() {
