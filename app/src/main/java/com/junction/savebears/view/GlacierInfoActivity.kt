@@ -3,6 +3,7 @@ package com.junction.savebears.view
 import android.graphics.Color
 import android.os.Bundle
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.charts.CombinedChart
@@ -17,10 +18,15 @@ import com.junction.savebears.R
 import com.junction.savebears.adapter.GlacierInfoAdapter
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.databinding.ActivityGlacierInfoBinding
-import com.junction.savebears.model.Glacier
+import com.junction.savebears.remote.model.Glacier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -65,11 +71,19 @@ class GlacierInfoActivity : BaseActivity() {
                 )
             )
         }
-
         showAllGlacierInfos()
     }
 
     private fun showAllGlacierInfos() {
+        val data = flow { emit(saveBearsApi.getGlacierChangeData()) }
+
+        lifecycleScope.launch {
+            data.catch { Timber.e(it) }
+                .collect {
+
+                }
+        }
+
         val dummyUrl = "https://c402277.ssl.cf1.rackcdn.com/photos/3218/images/blog_show/Alaska_June_2010_053.jpg?1357107480"
         val dummy = Glacier(dummyUrl, "2020-02-21")
         val list = mutableListOf<Glacier>()

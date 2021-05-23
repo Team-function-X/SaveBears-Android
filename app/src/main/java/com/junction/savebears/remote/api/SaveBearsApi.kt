@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface SaveBearsApi {
     @GET("/api")
-    suspend fun getGlacierChange(): GlacierResponse
+    suspend fun getGlacierChangeData(): GlacierResponse
 }
