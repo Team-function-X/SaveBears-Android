@@ -5,8 +5,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class GlacierResponse(
-    @field:Json(name = "change")
-    val totalChanges: Int,
     @field:Json(name = "19841993")
     val data1984: Glacier,
     @field:Json(name = "19942003")
@@ -20,8 +18,10 @@ data class GlacierResponse(
 @JsonClass(generateAdapter = true)
 data class Glacier(
     @field:Json(name = "amount")
-    val changeAmoun: String,
+    val changeAmount: String,
     @field:Json(name = "image_url")
-    val imageUrl: String
+    val imageUrl: String,
+    @field:Json(name = "date")
+    var date: String?
 )
 

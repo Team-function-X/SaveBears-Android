@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.junction.savebears.databinding.RvGlacierInfoBinding
-import com.junction.savebears.model.Glacier
+import com.junction.savebears.remote.model.Glacier
 
 class GlacierInfoAdapter : RecyclerView.Adapter<GlacierInfoAdapter.ViewHolder>() {
 
@@ -32,10 +32,7 @@ class GlacierInfoAdapter : RecyclerView.Adapter<GlacierInfoAdapter.ViewHolder>()
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Glacier) {
-            binding.root.setOnClickListener {
-
-            }
-            Glide.with(binding.root.context)
+            Glide.with(binding.root)
                 .load(item.imageUrl)
                 .into(binding.ivGlacier)
 

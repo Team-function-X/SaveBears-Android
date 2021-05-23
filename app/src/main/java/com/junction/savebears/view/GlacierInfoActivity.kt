@@ -64,31 +64,37 @@ class GlacierInfoActivity : BaseActivity() {
     private fun setRecyclerViewAdapter() {
         binding.rvGlacierInfo.apply {
             adapter = this@GlacierInfoActivity.adapter
-            addItemDecoration(
-                DividerItemDecoration(
-                    this.context,
-                    (this.layoutManager as LinearLayoutManager).orientation
-                )
-            )
+
         }
         showAllGlacierInfos()
     }
 
     private fun showAllGlacierInfos() {
         val data = flow { emit(saveBearsApi.getGlacierChangeData()) }
-
+        val list = mutableListOf<Glacier>()
         lifecycleScope.launch {
-            data.catch { Timber.e(it) }
+            data.catch { Timber.i(it) }
                 .collect {
+                    it.data1984.date = "1984"
+                    it.data1994.date = "1994"
+                    it.data2004.date = "2004"
+                    it.data2014.date = "2014"
 
+                    list.add(it.data1984)
+                    list.add(it.data1994)
+                    list.add(it.data2004)
+                    list.add(it.data2014)
+
+                    list.forEach {
+                        Timber.d(it.changeAmount)
+                    }
+
+                    adapter.addItem(list)
+                    adapter.notifyDataSetChanged()
                 }
         }
 
-        val dummyUrl = "https://c402277.ssl.cf1.rackcdn.com/photos/3218/images/blog_show/Alaska_June_2010_053.jpg?1357107480"
-        val dummy = Glacier(dummyUrl, "2020-02-21")
-        val list = mutableListOf<Glacier>()
-        (0..9).forEach { list.add(dummy) }
-        adapter.addItem(list)
+
     }
 
     private fun showGraph() {
