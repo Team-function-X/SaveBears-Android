@@ -11,8 +11,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.core.BuildConfig
 import com.google.android.material.snackbar.Snackbar
-import com.junction.savebears.BuildConfig
+//import com.junction.savebears.BuildConfig
 import com.junction.savebears.R
 import com.junction.savebears.base.BaseActivity
 import com.junction.savebears.component.ext.bitmapToFile
@@ -112,7 +113,7 @@ class RegisterChallengeActivity : BaseActivity() {
         Amplify.Storage.uploadFile(fileName, file,
             // onSuccess
             {
-                Thread.sleep(2000)
+                Thread.sleep(3000)
                 Timber.i("Successfully uploaded: ${it.key}")
                 lifecycleScope.launch {
                     flow { emit(challengeApi.getChallengeResult(imageName = it.key)) }
