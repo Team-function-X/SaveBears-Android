@@ -7,45 +7,6 @@
     tools:context=".view.MainActivity"
     tools:ignore="ExtraText">
 
-    <LinearLayout
-        android:id="@+id/challenge_arrived_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="200dp"
-            android:src="@drawable/ic_water_bottle" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/notosanscjkkr_bold"
-            android:gravity="center"
-            android:text="Recycling Plastic\nPET Bottle!"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/ecoChallengeButton"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="end|bottom"-->
-    <!--        android:layout_margin="24dp"-->
-    <!--        android:backgroundTint="@color/blue_500"-->
-    <!--        android:src="@drawable/ic_baseline_add_circle_24"-->
-    <!--        app:fabCustomSize="70dp"-->
-    <!--        app:iconPadding="4dp"-->
-    <!--        app:maxImageSize="40dp"-->
-    <!--        app:tint="@color/white" />-->
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_polar"
         android:layout_width="match_parent"
@@ -79,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/margin24"
-            app:borderWidth="20dp"
             android:layout_marginBottom="@dimen/margin24"
+            app:borderWidth="20dp"
             app:efab_color="@color/blue_700"
             app:efab_icon="@drawable/ic_baseline_add_circle_outline_24"
             app:efab_orientation="portrait" />
@@ -97,14 +58,40 @@
 
         <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/faboption_2"
-            app:fabSize="normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fabSize="normal"
             app:fab_color="@color/white"
             app:fab_icon="@drawable/ic_list_icon"
             app:fab_orientation="portrait"
             app:label_text="@string/floating_title_2" />
     </com.nambimobile.widgets.efab.ExpandableFabLayout>
+
+    <LinearLayout
+        android:id="@+id/challenge_arrived_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/ic_water_bottle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/notosanscjkkr_bold"
+            android:gravity="center"
+            android:text="Recycling Plastic\nPET Bottle!"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <include
         android:id="@+id/loading_view"

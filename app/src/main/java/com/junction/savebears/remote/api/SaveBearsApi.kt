@@ -1,6 +1,5 @@
 package com.junction.savebears.remote.api
 
-import com.junction.savebears.remote.model.Glacier
 import com.junction.savebears.remote.model.GlacierResponse
 import retrofit2.http.GET
 

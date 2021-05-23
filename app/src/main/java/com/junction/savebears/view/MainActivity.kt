@@ -34,11 +34,12 @@ class MainActivity : BaseActivity() {
     enum class Result { Success, Fail }
 
     private val challengeLauncher: ActivityResultLauncher<Bundle> = // 첼린지 런처
-        registerForActivityResult(ChallengeLauncherContract()) { result: Result ->
+        registerForActivityResult(ChallengeLauncherContract()) { result: Result? ->
             val data =
                 when (result) {
                     Result.Success -> Glacier.Safe
                     Result.Fail -> Glacier.Dangerous
+                    else -> return@registerForActivityResult
                 }.value
 
             showGlacierData(data)

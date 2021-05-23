@@ -18,7 +18,7 @@ data class GlacierResponse(
 @JsonClass(generateAdapter = true)
 data class Glacier(
     @field:Json(name = "amount")
-    val changeAmount: String,
+    val changeAmount: Float,
     @field:Json(name = "image_url")
     val imageUrl: String,
     @field:Json(name = "date")
